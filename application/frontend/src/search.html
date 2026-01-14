@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-42SQV5RQNV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-42SQV5RQNV');
+  </script>
+  <meta charset="UTF-8" />
+  <title>Search Results - EduGator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    // Check localStorage and set data-auth attribute immediately
+    (function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      document.documentElement.setAttribute('data-auth', isLoggedIn ? 'in' : 'out');
+    })();
+  </script>
+  <style>
+    * { 
+        margin: 0; 
+        padding: 0; 
+        box-sizing: border-box; 
+    }
+    body { 
+        font-family: Arial, sans-serif; 
+        background-color: #f4f4f4; 
+    }
+    nav {
+        background-color: #333;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      gap: 2rem;
+      height: 70px;
+    }
+    .nav-left { 
+        display: flex; 
+        align-items: center; 
+        gap: 2rem; 
+        flex: 1; 
+        min-height: 38px; 
+    }
+    .logo img { 
+        height: 30px; 
+        width: auto; 
+        display: block; 
+    }
+    .nav-menu {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+    }
+    .nav-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+    }
+    /* Auth-based nav visibility */
+    .nav-auth-in {
+      display: none !important;
+    }
+    html[data-auth="in"] .nav-auth-in {
+      display: flex !important;
+    }
+    html[data-auth="in"] .nav-auth-out {
+      display: none !important;
+    }
+    html[data-auth="out"] .nav-auth-in {
+      display: none !important;
+    }
+    .inbox-icon img {
+      height: 24px;
+      width: 24px;
+      display: block;
+      filter: brightness(0) invert(1); 
+    }
+    .nav-link:hover {
+        background-color: #555;
+    }
+    .dropdown {
+      position: absolute; 
+      top: 100%; left: 0; 
+      background-color: #444; 
+      min-width: 200px;
+      border-radius: 4px; 
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+      display: none; 
+      z-index: 1000;
+    }
+    .nav-item:hover .dropdown { 
+        display: block; 
+    }
+    .dropdown-item {
+      display: block; 
+      color: white; 
+      text-decoration: none; 
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #555; 
+      transition: background-color 0.3s;
+    }
+    .dropdown-item:hover { 
+        background-color: #555; 
+    }
+    .dropdown-item:last-child { 
+        border-bottom: none; 
+    }
+
+    .page {
+      max-width: 1200px; 
+      margin: 2rem auto; 
+      padding: 0 2rem;
+    }
+    .breadcrumbs {
+      display: flex; 
+      align-items: center; 
+      gap: .75rem; 
+      margin-bottom: 1rem;
+    }
+    .breadcrumbs a {
+      color: #333; 
+      text-decoration: none; 
+      background: #eaeaea; 
+      padding: .4rem .7rem;
+      border-radius: .5rem; 
+      transition: background .2s;
+    }
+    .breadcrumbs a:hover { 
+        background: #d9d9d9; 
+    }
+    .search-bar {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1rem;
+      display: grid;
+      gap: .75rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 1.25rem;
+    }
+    .search-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: .5rem;
+    }
+    .search-input, .search-select, .search-date, .search-number, .search-button {
+      padding: .9rem;
+      font-size: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+    .search-input:focus, .search-select:focus, .search-date:focus, .search-number:focus {
+      border-color: #555;
+    }
+    .search-button {
+      background: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .search-button:hover {
+        background: #555;
+    }
+
+    .search-content {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .filters-sidebar {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1.25rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 1rem;
+    }
+
+    .filters-sidebar h3 {
+      color: #333;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .filter-group {
+      margin-bottom: 1rem;
+    }
+
+    .filter-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .filter-group label {
+      display: block;
+      color: #555;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .results-container {
+      min-width: 0;
+    }
+
+    @media (max-width: 900px) {
+      .search-content {
+        grid-template-columns: 1fr;
+      }
+
+      .filters-sidebar {
+        position: static;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .search-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .results-head {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: baseline; 
+      margin: 1rem 0 1.25rem;
+      flex-wrap: wrap; 
+      gap: .75rem;
+    }
+    .results-head h2 { 
+        color: #333; 
+    }
+    .results-head p { 
+        color: #666; 
+    }
+
+    .grid {
+      display: grid; 
+      gap: 1rem; 
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+      display: grid;
+      gap: .5rem;
+    }
+    .card.clickable {
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card.clickable:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .card h3 {
+        color: #333;
+        margin-bottom: .25rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .meta { 
+        color: #666; 
+        font-size: .95rem; 
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #e8eefc;
+      color: #2f4ba5;
+      padding: .25rem .55rem;
+      border-radius: 999px;
+      font-size: .85rem;
+      font-weight: 600;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .pills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+      align-items: flex-start;
+    }
+    .rating { 
+        font-weight: 700; 
+    }
+    .empty {
+      background: #fff; 
+      border-radius: 10px; 
+      padding: 2rem; 
+      text-align: center;
+      color: #666; 
+      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+    }
+    
+    .demo-banner {
+            background-color: #06402B; /* Dark Green */
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-banner">
+        SFSU Software Engineering Project CSC 648-848, Fall 2025. For Demonstration Only
+    </div>
+  <nav>
+    <div class="nav-container">
+      <div class="nav-left">
+        <a href="index.html" class="logo">
+          <img src="public/nav_logo.png" alt="EduGator Logo" />
+        </a>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">About</a>
+          <div class="dropdown">
+            <a href="about/about-grady.html" class="dropdown-item">Grady Walworth - Team Lead</a>
+            <a href="about/about-michael.html" class="dropdown-item">Michael Thompson - Github Lead</a>
+            <a href="about/about-tejas.html" class="dropdown-item">Tejas Rajan - Frontend Lead</a>
+            <a href="about/about-kameron.html" class="dropdown-item">Kameron Jacob - Frontend Developer</a>
+            <a href="about/about-chris.html" class="dropdown-item">Chris Chan - Backend Lead</a>
+            <a href="about/about-hardy.html" class="dropdown-item">Hardy Chang - Backend Developer</a>
+          </div>
+        </li>
+        <li class="nav-item nav-auth-in"><a href="calendar.html" class="nav-link">Calendar</a></li>
+        <li class="nav-item nav-auth-in" id="inbox-placeholder">
+          <a href="inbox.html" class="nav-link inbox-icon">
+            <img src="public/inbox-icon.png" alt="Messages">
+          </a>
+        </li>
+        <li class="nav-item nav-auth-in" id="profile-placeholder"><a href="studentDashboard.html" class="nav-link">Profile</a></li>
+        <li class="nav-item nav-auth-out"><a href="auth/login.html" class="nav-link">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="page">
+    <div class="breadcrumbs">
+      <a href="index.html">← Back to Home</a>
+    </div>
+
+    <form id="refineForm" class="search-bar" action="search.html" method="GET">
+      <div class="search-row">
+        <input class="search-input" type="text" name="q" placeholder="Search tutors, sessions, departments, or courses…" />
+        <button class="search-button" type="submit">Search</button>
+      </div>
+    </form>
+
+    <div class="search-content">
+      <!-- Filters Sidebar -->
+      <aside class="filters-sidebar">
+        <h3>Filters</h3>
+        <div class="filter-group">
+          <label for="departmentFilter">Department</label>
+          <select class="search-select" name="department" id="departmentFilter" form="refineForm">
+            <option value="">All departments</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="minRatingFilter">Min Rating</label>
+          <input class="search-number" type="number" step="0.1" min="0" max="5" name="minRating" id="minRatingFilter" placeholder="0–5" form="refineForm" />
+        </div>
+        <div class="filter-group">
+          <label for="startDateFilter">Start Date</label>
+          <input class="search-date" type="date" name="startDate" id="startDateFilter" form="refineForm" />
+        </div>
+        <div class="filter-group">
+          <label for="endDateFilter">End Date</label>
+          <input class="search-date" type="date" name="endDate" id="endDateFilter" form="refineForm" />
+        </div>
+      </aside>
+
+      <!-- Results Container -->
+      <div class="results-container">
+        <!-- Sessions Section -->
+        <div class="results-head" id="sessionsHeader" style="display:none;">
+          <h2>Available Sessions</h2>
+          <p id="sessionsCount"></p>
+        </div>
+        <section id="sessionsGrid" class="grid" aria-live="polite"></section>
+
+        <!-- Tutors Section -->
+        <div class="results-head" id="tutorsHeader" style="display:none;">
+          <h2>Tutors</h2>
+          <p id="tutorsCount"></p>
+        </div>
+        <section id="tutorsGrid" class="grid" aria-live="polite"></section>
+
+        <div id="emptyState" class="empty" style="display:none;">
+          No sessions or tutors matched your search. Try broadening your filters.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const API_HOSTS = [window.location.origin];
+
+    const star = (n) => `⭐ ${n.toFixed(1)}`;
+
+    function getParams() {
+      const u = new URLSearchParams(window.location.search);
+      return {
+        q: (u.get("q") || "").trim(),
+        department: (u.get("department") || "").trim(),
+        minRating: parseFloat(u.get("minRating")) || null,
+        startDate: u.get("startDate") || "",
+        endDate: u.get("endDate") || "",
+      };
+    }
+
+    function applyParamsToForm(params) {
+      const form = document.getElementById("refineForm");
+      form.q.value = params.q;
+      form.department.value = params.department;
+      form.minRating.value = params.minRating ?? "";
+      form.startDate.value = params.startDate;
+      form.endDate.value = params.endDate;
+    }
+
+    function formatDateTime(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+    }
+
+    async function loadDepartments() {
+      try {
+        const departments = await fetchWithFallback('/api/departments');
+        const departmentFilter = document.getElementById('departmentFilter');
+
+        // Keep "All departments" option and add fetched departments
+        departments.forEach(dept => {
+          const option = document.createElement('option');
+          option.value = dept.department_code;
+          option.textContent = `${dept.department_code} - ${dept.department_name}`;
+          departmentFilter.appendChild(option);
+        });
+
+        // Apply current filter value after loading departments
+        const params = getParams();
+        if (params.department) {
+          departmentFilter.value = params.department;
+        }
+      } catch (error) {
+        console.error('Failed to load departments:', error);
+      }
+    }
+
+    async function fetchWithFallback(pathAndQuery) {
+      let lastErr;
+      for (const host of API_HOSTS) {
+        try {
+          const url = `${host}${pathAndQuery}`;
+          const r = await fetch(url);
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return await r.json();
+        } catch (e) {
+          lastErr = e;
+          console.warn('Fetch failed on', host, e);
+        }
+      }
+      throw lastErr || new Error('All hosts failed');
+    }
+
+    function showLoading() {
+      const sessionsGrid = document.getElementById("sessionsGrid");
+      const tutorsGrid = document.getElementById("tutorsGrid");
+      const empty = document.getElementById("emptyState");
+      const sessionsHeader = document.getElementById("sessionsHeader");
+      const tutorsHeader = document.getElementById("tutorsHeader");
+
+      empty.style.display = "none";
+      sessionsHeader.style.display = "none";
+      tutorsHeader.style.display = "none";
+      sessionsGrid.innerHTML = '<div class="card"><p>Loading...</p></div>';
+      tutorsGrid.innerHTML = '';
+    }
+
+    function showError(message) {
+      const sessionsGrid = document.getElementById("sessionsGrid");
+      const tutorsGrid = document.getElementById("tutorsGrid");
+      const empty = document.getElementById("emptyState");
+      const sessionsHeader = document.getElementById("sessionsHeader");
+      const tutorsHeader = document.getElementById("tutorsHeader");
+
+      empty.style.display = "none";
+      sessionsHeader.style.display = "none";
+      tutorsHeader.style.display = "none";
+      sessionsGrid.innerHTML = `<div class="card"><p style="color: #ef4444;">${message}</p></div>`;
+      tutorsGrid.innerHTML = '';
+    }
+
+    async function render() {
+      const params = getParams();
+      applyParamsToForm(params);
+
+      const sessionsGrid = document.getElementById("sessionsGrid");
+      const tutorsGrid = document.getElementById("tutorsGrid");
+      const empty = document.getElementById("emptyState");
+      const sessionsHeader = document.getElementById("sessionsHeader");
+      const tutorsHeader = document.getElementById("tutorsHeader");
+      const sessionsCount = document.getElementById("sessionsCount");
+      const tutorsCount = document.getElementById("tutorsCount");
+
+      showLoading();
+
+      try {
+        // Build API query
+        const apiParams = new URLSearchParams();
+        if (params.q) apiParams.set('q', params.q);
+        if (params.department) apiParams.set('department', params.department);
+        if (params.minRating) apiParams.set('minRating', params.minRating);
+        if (params.startDate) apiParams.set('startDate', params.startDate);
+        if (params.endDate) apiParams.set('endDate', params.endDate);
+
+        const data = await fetchWithFallback(`/api/search${apiParams.toString() ? '?' + apiParams.toString() : ''}`);
+        const sessions = data.sessions?.results || [];
+        const tutors = data.tutors?.results || [];
+
+        // Clear grids
+        sessionsGrid.innerHTML = "";
+        tutorsGrid.innerHTML = "";
+
+        // Show/hide sections based on results
+        if (sessions.length === 0 && tutors.length === 0) {
+          empty.style.display = "block";
+          sessionsHeader.style.display = "none";
+          tutorsHeader.style.display = "none";
+          return;
+        }
+        empty.style.display = "none";
+
+        // Render Sessions
+        if (sessions.length > 0) {
+          sessionsHeader.style.display = "flex";
+          sessionsCount.textContent = `${sessions.length} session${sessions.length === 1 ? "" : "s"}`;
+
+          sessions.forEach(session => {
+            const card = document.createElement("div");
+            card.className = "card clickable";
+            card.innerHTML = `
+              <h3 title="${session.title}">${session.title}</h3>
+              <p class="meta"><strong>Tutor:</strong> ${session.tutor_name}</p>
+              <div class="pills-container">
+                ${session.courses.map(c => `<span class="pill">${c}</span>`).join('')}
+              </div>
+              <p class="meta"><strong>Type:</strong> ${session.session_type.replace(/_/g, ' ')}</p>
+              <p class="meta"><strong>Start:</strong> ${formatDateTime(session.start_time)}</p>
+              <p class="meta"><strong>End:</strong> ${formatDateTime(session.end_time)}</p>
+              <p class="meta rating"><strong>Tutor Rating:</strong> ${star(session.tutor_rating)}</p>
+              ${session.location_details ? `<p class="meta"><strong>Location:</strong> ${session.location_details}</p>` : ''}
+            `;
+            card.addEventListener('click', () => {
+              const searchParams = window.location.search;
+              window.location.href = `session.html?id=${session.session_id || session.id || ''}&source=search&returnParams=${encodeURIComponent(searchParams)}`;
+            });
+            sessionsGrid.appendChild(card);
+          });
+        } else {
+          sessionsHeader.style.display = "none";
+        }
+
+        // Render Tutors
+        if (tutors.length > 0) {
+          tutorsHeader.style.display = "flex";
+          tutorsCount.textContent = `${tutors.length} tutor${tutors.length === 1 ? "" : "s"}`;
+
+          tutors.forEach(tutor => {
+            const card = document.createElement("div");
+            card.className = "card clickable";
+            card.innerHTML = `
+              <h3>${tutor.name}</h3>
+              <div class="pills-container">
+                ${tutor.courses.map(c => `<span class="pill">${c}</span>`).join('')}
+              </div>
+              <p class="meta">${tutor.bio || ''}</p>
+              <p class="meta rating"><strong>Rating:</strong> ${star(tutor.rating)}</p>
+            `;
+            card.addEventListener('click', () => {
+              const searchParams = window.location.search;
+              window.location.href = `tutorProfile.html?id=${tutor.tutor_id || tutor.id || ''}&returnParams=${encodeURIComponent(searchParams)}`;
+            });
+            tutorsGrid.appendChild(card);
+          });
+        } else {
+          tutorsHeader.style.display = "none";
+        }
+      } catch (error) {
+        console.error('Search error:', error);
+        showError(`Search failed: ${error.message}`);
+      }
+    }
+
+    // Auto-submit form when filters change
+    function setupFilterListeners() {
+      const departmentFilter = document.getElementById('departmentFilter');
+      const minRatingFilter = document.getElementById('minRatingFilter');
+      const startDateFilter = document.getElementById('startDateFilter');
+      const endDateFilter = document.getElementById('endDateFilter');
+
+      [departmentFilter, minRatingFilter, startDateFilter, endDateFilter].forEach(filter => {
+        if (filter) {
+          filter.addEventListener('change', () => {
+            document.getElementById('refineForm').submit();
+          });
+        }
+      });
+    }
+
+    // Initialize page: load departments and run search
+    loadDepartments();
+    render();
+    setupFilterListeners();
+  </script>
+
+  <!-- Auth utility for managing login state and nav bar -->
+  <script src="js/auth.js"></script>
+</body>
+</html>

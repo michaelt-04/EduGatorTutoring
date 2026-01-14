@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-42SQV5RQNV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-42SQV5RQNV');
+  </script>
+  <meta charset="UTF-8" />
+  <title>Messages - EduGator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    // Check localStorage and set data-auth attribute immediately
+    (function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      document.documentElement.setAttribute('data-auth', isLoggedIn ? 'in' : 'out');
+    })();
+  </script>
+  <style>
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    body { 
+      font-family: Arial, sans-serif; 
+      background-color: #f4f4f4; 
+    }
+    nav {
+      background-color: #333;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      gap: 2rem;
+      height: 70px;
+    }
+    .nav-left { 
+      display: flex; 
+      align-items: center; 
+      gap: 2rem; 
+      flex: 1;
+      min-height: 38px;
+    }
+    .logo img { 
+      height: 30px; 
+      width: auto; 
+      display: block; 
+    }
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+    }
+    /* Auth-based nav visibility */
+    .nav-auth-in {
+      display: none !important;
+    }
+    html[data-auth="in"] .nav-auth-in {
+      display: flex !important;
+    }
+    html[data-auth="in"] .nav-auth-out {
+      display: none !important;
+    }
+    html[data-auth="out"] .nav-auth-in {
+      display: none !important;
+    }
+    .inbox-icon img {
+      height: 24px;
+      width: 24px;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+    .nav-link:hover {
+      background-color: #555;
+    }
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #444;
+      min-width: 200px;
+      border-radius: 4px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: none;
+      z-index: 1000;
+    }
+    /* Change hover to a class that JS can control on mobile/desktop */
+    .nav-item:hover .dropdown, .dropdown-active {
+      display: block;
+    }
+    .dropdown-item {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #555;
+      transition: background-color 0.3s;
+    }
+    .dropdown-item:hover {
+      background-color: #555;
+    }
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+
+    /* Responsive Navbar Styles */
+    .menu-toggle {
+      display: none; /* Hide toggle button on desktop */
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001; /* Ensure it's above the menu when open */
+      padding: 0;
+      width: 30px; /* Define button size */
+      height: 25px;
+      position: relative; /* For absolute positioning of bars */
+    }
+
+    /* Style for the hamburger bars */
+    .menu-toggle span {
+      display: block;
+      width: 30px;
+      height: 3px;
+      margin: 5px 0;
+      background-color: white;
+      transition: all 0.4s ease-in-out;
+      border-radius: 2px;
+    }
+
+    /* Transformation for the 'X' shape when menu is active */
+    .menu-toggle.active .bar1 {
+      transform: translate(0, 8px) rotate(-45deg);
+    }
+
+    .menu-toggle.active .bar2 {
+      opacity: 0;
+    }
+
+    .menu-toggle.active .bar3 {
+      transform: translate(0, -8px) rotate(45deg);
+    }
+    @media (max-width: 720px) {
+      .menu-toggle {
+        display: block; /* Show toggle button on mobile */
+      }
+
+      .nav-menu {
+        display: none; /* Hide menu by default on mobile */
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 68px; /* Position right below the nav bar */
+        left: 0;
+        background-color: #333;
+        box-shadow: 0 4px 6px rgba(0,0,0,.1);
+        padding: 1rem 0;
+        gap: 0;
+      }
+
+      .nav-menu.active {
+        display: flex; /* Show menu when active class is present */
+      }
+
+      .nav-item {
+        width: 100%;
+      }
+
+      .nav-link {
+        display: block;
+        padding: 0.75rem 2rem;
+        text-align: left;
+      }
+
+      .dropdown {
+        position: static; /* Change dropdown position for mobile */
+        width: 100%;
+        background-color: #444;
+        box-shadow: none;
+        border-radius: 0;
+        /* Ensure dropdown only shows with JS class on mobile */
+        display: none !important;
+      }
+
+      .dropdown-active.dropdown {
+        display: block !important;
+      }
+
+      .dropdown-item {
+        padding: 0.75rem 3rem; /* Indent dropdown items */
+      }
+    }
+
+    .inbox-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 1.5rem;
+      min-height: calc(100vh - 200px);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      height: fit-content;
+    }
+    .compose-btn {
+      width: 100%;
+      background: #2f4ba5;
+      color: white;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      transition: background 0.2s;
+    }
+    .compose-btn:hover {
+      background: #1e3a8a;
+    }
+    .folder-list {
+      list-style: none;
+    }
+    .folder-item {
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.25rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .folder-item:hover {
+      background: #f3f4f6;
+    }
+    .folder-item.active {
+      background: #e8eefc;
+      color: #2f4ba5;
+      font-weight: 600;
+    }
+    .unread-count {
+      background: #2f4ba5;
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* Main Content */
+    .main-content {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Message List */
+    .message-list {
+      flex: 1;
+      overflow-y: auto;
+    }
+    .message-item {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+    }
+    .message-item:hover {
+      background: #f9fafb;
+    }
+    .message-item.unread {
+      background: #f0f9ff;
+      font-weight: 600;
+    }
+    .message-item.selected {
+      background: #e8eefc;
+    }
+    .message-sender {
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.25rem;
+    }
+    .message-subject {
+      color: #333;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .message-preview {
+      color: #666;
+      font-size: 0.9rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .message-time {
+      color: #999;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    /* Session request badge */
+    .request-badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .request-badge.pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .request-badge.accepted {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .request-badge.denied {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* Message Detail */
+    .message-detail {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+    }
+    .message-detail.active {
+      display: flex;
+    }
+    .detail-header {
+      padding: 1.5rem;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    .detail-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .action-btn {
+      padding: 0.5rem 1rem;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .action-btn:hover {
+      background: #e5e7eb;
+    }
+    .detail-subject {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.75rem;
+    }
+    .detail-from {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #666;
+      margin-bottom: 0.25rem;
+    }
+    .detail-date {
+      color: #999;
+      font-size: 0.9rem;
+    }
+    .detail-body {
+      flex: 1;
+      padding: 1.5rem;
+      overflow-y: auto;
+      line-height: 1.6;
+      color: #333;
+    }
+    /* Session request action buttons */
+    .request-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid #e5e7eb;
+    }
+    .request-action-btn {
+      flex: 1;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .request-action-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+    .request-action-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .request-action-btn.accept {
+      background: #10b981;
+      color: white;
+    }
+    .request-action-btn.accept:hover:not(:disabled) {
+      background: #059669;
+    }
+    .request-action-btn.deny {
+      background: #ef4444;
+      color: white;
+    }
+    .request-action-btn.deny:hover:not(:disabled) {
+      background: #dc2626;
+    }
+    .request-status-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .request-status-badge.accepted {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .request-status-badge.denied {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* Compose Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 700px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h2 {
+      font-size: 1.25rem;
+      color: #333;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #999;
+    }
+    .modal-body {
+      padding: 1.5rem;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: Arial, sans-serif;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #2f4ba5;
+    }
+    .form-group textarea {
+      min-height: 250px;
+      resize: vertical;
+    }
+    .modal-footer {
+      padding: 1.5rem;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+    .btn-primary {
+      background: #2f4ba5;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover {
+      background: #1e3a8a;
+    }
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #333;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #999;
+      padding: 3rem;
+      font-style: italic;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #333;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 9999;
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      max-width: 90%;
+      text-align: center;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    .toast.info {
+      background: #2f4ba5;
+    }
+    .toast.success {
+      background: #10b981;
+    }
+    .toast.error {
+      background: #ef4444;
+    }
+
+    /* Confirm Modal */
+    .confirm-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .confirm-modal.active {
+      display: flex;
+    }
+    .confirm-content {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 400px;
+      text-align: center;
+    }
+    .confirm-content p {
+      color: #333;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    .confirm-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      border-top: 1px solid #e5e7eb;
+      background: #fafafa;
+    }
+    .pagination-btn {
+      padding: 0.5rem 1rem;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .pagination-btn:hover:not(:disabled) {
+      background: #e5e7eb;
+      border-color: #d1d5db;
+    }
+    .pagination-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .pagination-info {
+      color: #666;
+      font-size: 0.9rem;
+      padding: 0 1rem;
+    }
+    .pagination-pages {
+      display: flex;
+      gap: 0.25rem;
+    }
+    .page-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .page-btn:hover:not(.active) {
+      background: #e5e7eb;
+    }
+    .page-btn.active {
+      background: #2f4ba5;
+      color: white;
+      border-color: #2f4ba5;
+    }
+
+    @media (max-width: 900px) {
+      .inbox-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: sticky;
+        top: 1rem;
+      }
+    }
+    
+    .demo-banner {
+            background-color: #06402B; /* Dark Green */
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-banner">
+        SFSU Software Engineering Project CSC 648-848, Fall 2025. For Demonstration Only
+    </div>
+  <nav>
+    <div class="nav-container">
+      <div class="nav-left">
+        <a href="index.html" class="logo">
+          <img src="public/nav_logo.png" alt="EduGator Logo" />
+        </a>
+      </div>
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item">
+          <!-- Added ID to the about link -->
+          <a href="#" class="nav-link" id="aboutLink">About</a>
+          <!-- Added ID to the dropdown -->
+          <div class="dropdown" id="aboutDropdown">
+            <a href="about/about-grady.html" class="dropdown-item">Grady Walworth - Team Lead</a>
+            <a href="about/about-michael.html" class="dropdown-item">Michael Thompson - Github Lead</a>
+            <a href="about/about-tejas.html" class="dropdown-item">Tejas Rajan - Frontend Lead</a>
+            <a href="about/about-kameron.html" class="dropdown-item">Kameron Jacob - Frontend Developer</a>
+            <a href="about/about-chris.html" class="dropdown-item">Chris Chan - Backend Lead</a>
+            <a href="about/about-hardy.html" class="dropdown-item">Hardy Chang - Backend Developer</a>
+          </div>
+        </li>
+        <li class="nav-item nav-auth-in"><a href="calendar.html" class="nav-link">Calendar</a></li>
+        <li class="nav-item nav-auth-in" id="inbox-placeholder">
+          <a href="inbox.html" class="nav-link inbox-icon">
+            <img src="public/inbox-icon.png" alt="Messages">
+          </a>
+        </li>
+        <li class="nav-item nav-auth-in" id="profile-placeholder"><a href="studentDashboard.html" class="nav-link">Profile</a></li>
+        <li class="nav-item nav-auth-out"><a href="auth/login.html" class="nav-link">Login</a></li>
+      </ul>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+        <span class="bar1"></span>
+        <span class="bar2"></span>
+        <span class="bar3"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="inbox-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <button class="compose-btn" onclick="openCompose()">✉️ Compose</button>
+      <ul class="folder-list">
+        <li class="folder-item active" onclick="switchFolder('inbox')">
+          <span>📥 Inbox</span>
+          <span class="unread-count" id="inboxCount" style="display: none;">0</span>
+        </li>
+        <li class="folder-item" onclick="switchFolder('sent')">
+          <span>📤 Sent</span>
+        </li>
+        <li class="folder-item" onclick="switchFolder('drafts')">
+          <span>📝 Drafts</span>
+        </li>
+        <li class="folder-item" onclick="switchFolder('trash')">
+          <span>🗑️ Trash</span>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Message List View -->
+      <div id="messageList" class="message-list">
+        <!-- Messages will be populated here -->
+      </div>
+
+      <!-- Pagination -->
+      <div id="paginationContainer" class="pagination" style="display: none;">
+        <button class="pagination-btn" id="prevPageBtn" onclick="goToPage(currentPage - 1)">← Prev</button>
+        <div class="pagination-pages" id="pageNumbers"></div>
+        <button class="pagination-btn" id="nextPageBtn" onclick="goToPage(currentPage + 1)">Next →</button>
+      </div>
+
+      <!-- Message Detail View -->
+      <div id="messageDetail" class="message-detail">
+        <div class="detail-header">
+          <div class="detail-actions">
+            <button class="action-btn" onclick="closeDetail()">← Back</button>
+            <button class="action-btn" id="replyBtn" onclick="replyToMessage()">↩️ Reply</button>
+            <button class="action-btn" id="restoreBtn" onclick="restoreMessage()" style="display:none;">♻️ Restore</button>
+            <button class="action-btn" id="deleteBtn" onclick="deleteMessage()">🗑️ Delete</button>
+          </div>
+          <h1 class="detail-subject" id="detailSubject"></h1>
+          <div class="detail-from">
+            <strong>From:</strong>
+            <span id="detailFrom"></span>
+          </div>
+          <div class="detail-date" id="detailDate"></div>
+        </div>
+        <div class="detail-body" id="detailBody"></div>
+        <!-- Session request actions (only shown for session_join_request messages) -->
+        <div id="requestActionsContainer" style="display: none; padding: 1.5rem; border-top: 2px solid #e5e7eb;">
+          <div id="requestActionsContent"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Compose Modal -->
+  <div id="composeModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>New Message</h2>
+        <button class="close-btn" onclick="closeCompose()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="composeForm">
+          <div class="form-group">
+            <label for="to">To (email):</label>
+            <input type="email" id="to" placeholder="recipient@sfsu.edu" required data-user-id="">
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" placeholder="Enter subject" required>
+          </div>
+          <div class="form-group">
+            <label for="body">Message:</label>
+            <textarea id="body" placeholder="Type your message here..." required></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeCompose()">Cancel</button>
+        <button class="btn-secondary" onclick="saveAsDraft()">Save Draft</button>
+        <button class="btn-secondary" id="deleteDraftBtn" onclick="deleteDraft()" style="display:none; background-color: #ef4444; color: white;">Delete Draft</button>
+        <button class="btn-primary" onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <div id="confirmModal" class="confirm-modal">
+    <div class="confirm-content">
+      <p id="confirmMessage">Are you sure?</p>
+      <div class="confirm-actions">
+        <button class="btn-secondary" onclick="closeConfirm()">Cancel</button>
+        <button class="btn-primary" id="confirmYes">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deny Reason Modal -->
+  <div id="denyReasonModal" class="confirm-modal">
+    <div class="confirm-content" style="max-width: 450px; text-align: left;">
+      <h3 style="margin-bottom: 1rem; color: #333; text-align: center;">Deny Request</h3>
+      <p style="color: #666; margin-bottom: 1rem; text-align: center;">Optionally provide a reason for the student.</p>
+      <textarea id="denyReasonText" placeholder="Enter a reason (optional)..." style="width: 100%; min-height: 100px; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 6px; font-size: 1rem; font-family: Arial, sans-serif; resize: vertical; margin-bottom: 1rem;"></textarea>
+      <div class="confirm-actions">
+        <button class="btn-secondary" onclick="closeDenyReasonModal()">Cancel</button>
+        <button class="btn-primary" id="denyReasonConfirm" style="background: #ef4444;">Deny Request</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showToast(message, type = 'info') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast ' + type;
+      void toast.offsetWidth;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
+    function showConfirm(message, onConfirm, confirmText = 'Delete') {
+      document.getElementById('confirmMessage').textContent = message;
+      document.getElementById('confirmYes').textContent = confirmText;
+      document.getElementById('confirmModal').classList.add('active');
+      document.getElementById('confirmYes').onclick = function() {
+        closeConfirm();
+        onConfirm();
+      };
+    }
+
+    function closeConfirm() {
+      document.getElementById('confirmModal').classList.remove('active');
+    }
+
+    // Message data from API
+    let inboxMessages = [];
+    let sentMessages = [];
+    let draftMessages = [];
+    let trashMessages = [];
+    let currentFolder = 'inbox';
+    let selectedMessage = null;
+    let isLoading = false;
+    let editingDraftId = null; // Track if we're editing a draft
+    let isOperationInProgress = false; // Track if an operation is in progress
+
+    // Pagination settings
+    const MESSAGES_PER_PAGE = 6;
+    let currentPage = 1;
+
+    // Helper to set button loading state
+    function setButtonLoading(buttonId, isLoading, originalText = null) {
+      const btn = document.getElementById(buttonId);
+      if (!btn) return;
+      btn.disabled = isLoading;
+      if (isLoading) {
+        btn.dataset.originalText = btn.textContent;
+        btn.textContent = 'Please wait...';
+      } else if (btn.dataset.originalText) {
+        btn.textContent = originalText || btn.dataset.originalText;
+      }
+    }
+
+    // Extract preview from message body
+    function extractPreview(body) {
+      if (!body) return '';
+      if (body.length > 100) {
+        return body.substring(0, 97) + '...';
+      }
+      return body;
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const now = new Date();
+      const diff = now - date;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+      if (days === 0) {
+        return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      } else if (days === 1) {
+        return 'Yesterday';
+      } else if (days < 7) {
+        return date.toLocaleDateString('en-US', { weekday: 'short' });
+      } else {
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Fetch inbox messages from API
+    async function fetchInboxMessages() {
+      try {
+        const response = await fetch('/api/messages/inbox', { credentials: 'include' });
+        const data = await response.json();
+        if (data.success) {
+          inboxMessages = data.messages.map(msg => ({
+            id: msg.id,
+            from: msg.from,
+            fromId: msg.fromId,
+            fromEmail: msg.fromEmail,
+            subject: msg.subject || 'No Subject',
+            preview: extractPreview(msg.body),
+            body: msg.body,
+            date: msg.date,
+            unread: msg.unread,
+            // Session request fields
+            messageType: msg.messageType || 'normal',
+            requestId: msg.requestId,
+            sessionId: msg.sessionId,
+            requestStatus: msg.requestStatus,
+            sessionTitle: msg.sessionTitle,
+            sessionStartTime: msg.sessionStartTime,
+            sessionCapacity: msg.sessionCapacity,
+            sessionEnrolled: msg.sessionEnrolled
+          }));
+        } else {
+          inboxMessages = [];
+        }
+      } catch (error) {
+        console.error('Error fetching inbox:', error);
+        inboxMessages = [];
+      }
+    }
+
+    // Fetch sent messages from API
+    async function fetchSentMessages() {
+      try {
+        const response = await fetch('/api/messages/sent', { credentials: 'include' });
+        const data = await response.json();
+        if (data.success) {
+          sentMessages = data.messages.map(msg => ({
+            id: msg.id,
+            from: 'You',
+            to: msg.to,
+            toId: msg.toId,
+            toEmail: msg.toEmail,
+            subject: msg.subject || 'No Subject',
+            preview: extractPreview(msg.body),
+            body: msg.body,
+            date: msg.date,
+            unread: false
+          }));
+        } else {
+          sentMessages = [];
+        }
+      } catch (error) {
+        console.error('Error fetching sent:', error);
+        sentMessages = [];
+      }
+    }
+
+    // Fetch draft messages from API
+    async function fetchDraftMessages() {
+      try {
+        const response = await fetch('/api/messages/drafts', { credentials: 'include' });
+        const data = await response.json();
+        if (data.success) {
+          draftMessages = data.messages.map(msg => ({
+            id: msg.id,
+            to: msg.to || '',
+            toId: msg.toId,
+            toEmail: msg.toEmail || '',
+            subject: msg.subject || '',
+            preview: extractPreview(msg.body),
+            body: msg.body || '',
+            date: msg.date,
+            unread: false
+          }));
+        } else {
+          draftMessages = [];
+        }
+      } catch (error) {
+        console.error('Error fetching drafts:', error);
+        draftMessages = [];
+      }
+    }
+
+    // Fetch trash messages from API
+    async function fetchTrashMessages() {
+      try {
+        const response = await fetch('/api/messages/trash', { credentials: 'include' });
+        const data = await response.json();
+        if (data.success) {
+          trashMessages = data.messages.map(msg => ({
+            id: msg.id,
+            from: msg.from,
+            fromId: msg.fromId,
+            fromEmail: msg.fromEmail,
+            to: msg.to,
+            toId: msg.toId,
+            toEmail: msg.toEmail,
+            subject: msg.subject || 'No Subject',
+            preview: extractPreview(msg.body),
+            body: msg.body,
+            date: msg.date,
+            unread: msg.unread,
+            wasFromMe: msg.wasFromMe
+          }));
+        } else {
+          trashMessages = [];
+        }
+      } catch (error) {
+        console.error('Error fetching trash:', error);
+        trashMessages = [];
+      }
+    }
+
+    // Load all messages
+    async function loadMessages() {
+      isLoading = true;
+      renderMessageList();
+
+      await Promise.all([
+        fetchInboxMessages(),
+        fetchSentMessages(),
+        fetchDraftMessages(),
+        fetchTrashMessages()
+      ]);
+
+      isLoading = false;
+      renderMessageList();
+      updateUnreadCount();
+    }
+
+    // Update unread count badge
+    async function updateUnreadCount() {
+      const countEl = document.getElementById('inboxCount');
+      try {
+        const response = await fetch('/api/messages/unread-count', { credentials: 'include' });
+        const data = await response.json();
+        if (countEl && data.success) {
+          const count = parseInt(data.unreadCount) || 0;
+          countEl.textContent = count;
+          countEl.style.display = count > 0 ? 'inline-block' : 'none';
+        } else if (countEl) {
+          countEl.style.display = 'none';
+        }
+      } catch (error) {
+        if (countEl) countEl.style.display = 'none';
+      }
+    }
+
+    function getCurrentMessages() {
+      switch (currentFolder) {
+        case 'inbox': return inboxMessages;
+        case 'sent': return sentMessages;
+        case 'drafts': return draftMessages;
+        case 'trash': return trashMessages;
+        default: return [];
+      }
+    }
+
+    function getTotalPages() {
+      const messages = getCurrentMessages();
+      return Math.ceil(messages.length / MESSAGES_PER_PAGE);
+    }
+
+    function getPagedMessages() {
+      const messages = getCurrentMessages();
+      const startIndex = (currentPage - 1) * MESSAGES_PER_PAGE;
+      const endIndex = startIndex + MESSAGES_PER_PAGE;
+      return messages.slice(startIndex, endIndex);
+    }
+
+    function goToPage(page) {
+      const totalPages = getTotalPages();
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderMessageList();
+      renderPagination();
+    }
+
+    function renderPagination() {
+      const paginationContainer = document.getElementById('paginationContainer');
+      const pageNumbersContainer = document.getElementById('pageNumbers');
+      const prevBtn = document.getElementById('prevPageBtn');
+      const nextBtn = document.getElementById('nextPageBtn');
+
+      const totalPages = getTotalPages();
+      const messages = getCurrentMessages();
+
+      // Hide pagination if no messages or only one page
+      if (messages.length === 0 || totalPages <= 1) {
+        paginationContainer.style.display = 'none';
+        return;
+      }
+
+      paginationContainer.style.display = 'flex';
+
+      // Update prev/next buttons
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+
+      // Render page numbers
+      let pageNumbersHtml = '';
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbersHtml += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+      }
+      pageNumbersContainer.innerHTML = pageNumbersHtml;
+    }
+
+    function renderMessageList() {
+      const listEl = document.getElementById('messageList');
+      const paginationContainer = document.getElementById('paginationContainer');
+
+      if (isLoading) {
+        listEl.innerHTML = '<div class="empty-state">Loading messages...</div>';
+        paginationContainer.style.display = 'none';
+        return;
+      }
+
+      const allMessages = getCurrentMessages();
+
+      if (allMessages.length === 0) {
+        const emptyMsg = currentFolder === 'trash'
+          ? 'Trash is empty'
+          : currentFolder === 'drafts'
+            ? 'No drafts'
+            : 'No messages in this folder';
+        listEl.innerHTML = `<div class="empty-state">${emptyMsg}</div>`;
+        paginationContainer.style.display = 'none';
+        return;
+      }
+
+      // Get messages for current page
+      const messages = getPagedMessages();
+
+      listEl.innerHTML = messages.map(msg => {
+        let displayName = '';
+        if (currentFolder === 'sent') {
+          displayName = 'To: ' + msg.to;
+        } else if (currentFolder === 'drafts') {
+          displayName = msg.to ? 'To: ' + msg.to : 'Draft';
+        } else if (currentFolder === 'trash') {
+          displayName = msg.wasFromMe ? 'To: ' + msg.to : msg.from;
+        } else {
+          displayName = msg.from;
+        }
+
+        // Session request badge HTML
+        let badgeHtml = '';
+        if (currentFolder === 'inbox' && msg.messageType === 'session_join_request') {
+          const status = msg.requestStatus || 'pending';
+          const statusText = status === 'pending' ? 'Session Request' : status.charAt(0).toUpperCase() + status.slice(1);
+          badgeHtml = `<span class="request-badge ${status}">${statusText}</span>`;
+        }
+
+        return `
+          <div class="message-item ${msg.unread ? 'unread' : ''}" onclick="openMessage(${msg.id})">
+            <div>
+              <div class="message-sender">${escapeHtml(displayName)}</div>
+              <div class="message-subject">
+                <span>${escapeHtml(msg.subject) || '(No subject)'}</span>
+                ${badgeHtml}
+              </div>
+              <div class="message-preview">${escapeHtml(msg.preview) || '(No content)'}</div>
+            </div>
+            <div class="message-time">${formatDate(msg.date)}</div>
+          </div>
+        `;
+      }).join('');
+
+      // Render pagination
+      renderPagination();
+    }
+
+    async function switchFolder(folder) {
+      currentFolder = folder;
+      currentPage = 1; // Reset to first page when switching folders
+
+      // Update active folder
+      document.querySelectorAll('.folder-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.target.closest('.folder-item').classList.add('active');
+
+      // Close detail view
+      closeDetail();
+
+      // Refresh the folder data
+      if (folder === 'inbox') await fetchInboxMessages();
+      else if (folder === 'sent') await fetchSentMessages();
+      else if (folder === 'drafts') await fetchDraftMessages();
+      else if (folder === 'trash') await fetchTrashMessages();
+
+      renderMessageList();
+    }
+
+    async function openMessage(id) {
+      const messages = getCurrentMessages();
+      const message = messages.find(m => m.id === id);
+      if (!message) return;
+
+      // For drafts, open in compose mode for editing
+      if (currentFolder === 'drafts') {
+        editingDraftId = message.id;
+        document.getElementById('to').value = message.toEmail || '';
+        document.getElementById('to').dataset.userId = message.toId || '';
+        document.getElementById('subject').value = message.subject || '';
+        document.getElementById('body').value = message.body || '';
+        document.getElementById('deleteDraftBtn').style.display = 'inline-block';
+        document.getElementById('composeModal').classList.add('active');
+        return;
+      }
+
+      // Mark as read if it's an inbox message and unread
+      if (currentFolder === 'inbox' && message.unread) {
+        try {
+          await fetch(`/api/messages/${id}/read`, { method: 'PATCH', credentials: 'include' });
+          message.unread = false;
+          // Re-render the list to remove the blue highlight before hiding it
+          renderMessageList();
+          updateUnreadCount();
+          if (window.authUtils && window.authUtils.refreshInboxBadge) {
+            window.authUtils.refreshInboxBadge();
+          }
+        } catch (error) {
+          console.error('Error marking message as read:', error);
+        }
+      }
+
+      selectedMessage = message;
+
+      // Populate detail view
+      document.getElementById('detailSubject').textContent = message.subject || '(No subject)';
+
+      let fromText = '';
+      if (currentFolder === 'sent') {
+        fromText = 'To: ' + message.to;
+      } else if (currentFolder === 'trash' && message.wasFromMe) {
+        fromText = 'To: ' + message.to;
+      } else {
+        fromText = message.from;
+      }
+      document.getElementById('detailFrom').textContent = fromText;
+      document.getElementById('detailDate').textContent = new Date(message.date).toLocaleString();
+      document.getElementById('detailBody').textContent = message.body;
+
+      // Show/hide action buttons based on folder
+      document.getElementById('replyBtn').style.display = currentFolder === 'trash' ? 'none' : 'inline-block';
+      document.getElementById('restoreBtn').style.display = currentFolder === 'trash' ? 'inline-block' : 'none';
+      document.getElementById('deleteBtn').textContent = currentFolder === 'trash' ? '🗑️ Delete Forever' : '🗑️ Delete';
+
+      // Handle session request actions
+      const requestActionsContainer = document.getElementById('requestActionsContainer');
+      const requestActionsContent = document.getElementById('requestActionsContent');
+
+      // Ensure requestId is a valid number
+      const validRequestId = message.requestId && !isNaN(parseInt(message.requestId, 10));
+
+      if (currentFolder === 'inbox' && message.messageType === 'session_join_request' && validRequestId) {
+        requestActionsContainer.style.display = 'block';
+        const requestIdNum = parseInt(message.requestId, 10);
+
+        if (message.requestStatus === 'pending') {
+          // Show Accept/Deny buttons
+          const spotsLeft = message.sessionCapacity - message.sessionEnrolled;
+          requestActionsContent.innerHTML = `
+            <div style="margin-bottom: 1rem;">
+              <strong>Session:</strong> ${escapeHtml(message.sessionTitle || 'Tutoring Session')}<br>
+              <strong>Available Spots:</strong> ${spotsLeft} / ${message.sessionCapacity}
+            </div>
+            <div class="request-actions" style="margin-top: 0; padding-top: 0; border-top: none;">
+              <button class="request-action-btn accept" onclick="acceptRequest(${requestIdNum})" id="acceptBtn">
+                ✓ Accept Student
+              </button>
+              <button class="request-action-btn deny" onclick="denyRequest(${requestIdNum})" id="denyBtn">
+                ✗ Deny Request
+              </button>
+            </div>
+          `;
+        } else {
+          // Show status badge
+          const statusClass = message.requestStatus === 'accepted' ? 'accepted' : 'denied';
+          const statusText = message.requestStatus === 'accepted' ? '✓ Student Accepted' : '✗ Request Denied';
+          requestActionsContent.innerHTML = `
+            <div class="request-status-badge ${statusClass}">${statusText}</div>
+          `;
+        }
+      } else {
+        requestActionsContainer.style.display = 'none';
+        requestActionsContent.innerHTML = '';
+      }
+
+      // Show detail, hide list and pagination
+      document.getElementById('messageList').style.display = 'none';
+      document.getElementById('paginationContainer').style.display = 'none';
+      document.getElementById('messageDetail').classList.add('active');
+    }
+
+    function closeDetail() {
+      document.getElementById('messageList').style.display = 'block';
+      document.getElementById('messageDetail').classList.remove('active');
+      document.getElementById('paginationContainer').style.display = getTotalPages() > 1 ? 'flex' : 'none';
+      selectedMessage = null;
+    }
+
+    function openCompose(prefillTo = '', prefillToId = null) {
+      editingDraftId = null; // Reset draft editing
+      document.getElementById('composeModal').classList.add('active');
+      if (prefillTo) {
+        document.getElementById('to').value = prefillTo;
+        if (prefillToId) {
+          document.getElementById('to').dataset.userId = prefillToId;
+        }
+      }
+    }
+
+    function closeCompose() {
+      document.getElementById('composeModal').classList.remove('active');
+      document.getElementById('composeForm').reset();
+      document.getElementById('to').dataset.userId = '';
+      document.getElementById('deleteDraftBtn').style.display = 'none';
+      editingDraftId = null;
+    }
+
+    function replyToMessage() {
+      if (!selectedMessage) return;
+
+      if (currentFolder === 'inbox' || (currentFolder === 'trash' && !selectedMessage.wasFromMe)) {
+        document.getElementById('to').value = selectedMessage.fromEmail || selectedMessage.from;
+        document.getElementById('to').dataset.userId = selectedMessage.fromId || '';
+      } else {
+        document.getElementById('to').value = selectedMessage.toEmail || selectedMessage.to;
+        document.getElementById('to').dataset.userId = selectedMessage.toId || '';
+      }
+
+      const originalSubject = selectedMessage.subject || '';
+      const replySubject = originalSubject.startsWith('Re: ') ? originalSubject : 'Re: ' + originalSubject;
+      document.getElementById('subject').value = replySubject;
+      openCompose();
+    }
+
+    async function restoreMessage() {
+      if (!selectedMessage || currentFolder !== 'trash' || isOperationInProgress) return;
+
+      isOperationInProgress = true;
+      setButtonLoading('restoreBtn', true);
+
+      try {
+        const response = await fetch(`/api/messages/${selectedMessage.id}/restore`, {
+          method: 'PATCH',
+          credentials: 'include'
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          showToast(data.message || 'Message restored', 'success');
+
+          // Save reference before closeDetail() sets selectedMessage to null
+          const wasFromMe = selectedMessage.wasFromMe;
+          closeDetail();
+
+          // Refresh trash and destination folder from server
+          await fetchTrashMessages();
+
+          // Refresh the destination folder based on where it was restored
+          if (data.message && data.message.includes('drafts')) {
+            await fetchDraftMessages();
+          } else if (wasFromMe) {
+            await fetchSentMessages();
+          } else {
+            await fetchInboxMessages();
+            updateUnreadCount();
+            if (window.authUtils && window.authUtils.refreshInboxBadge) {
+              window.authUtils.refreshInboxBadge();
+            }
+          }
+
+          renderMessageList();
+        } else {
+          showToast(data.message || 'Failed to restore message', 'error');
+        }
+      } catch (error) {
+        console.error('Error restoring message:', error);
+        showToast('Failed to restore message', 'error');
+      } finally {
+        isOperationInProgress = false;
+        setButtonLoading('restoreBtn', false, '♻️ Restore');
+      }
+    }
+
+    async function deleteMessage() {
+      if (!selectedMessage || isOperationInProgress) return;
+
+      const isTrash = currentFolder === 'trash';
+      const confirmMsg = isTrash
+        ? 'Are you sure you want to permanently delete this message?'
+        : 'Move this message to trash?';
+      const confirmText = isTrash ? 'Delete Forever' : 'Move to Trash';
+
+      showConfirm(confirmMsg, async function() {
+        isOperationInProgress = true;
+        setButtonLoading('deleteBtn', true);
+        setButtonLoading('confirmYes', true);
+
+        try {
+          const response = await fetch(`/api/messages/${selectedMessage.id}`, {
+            method: 'DELETE',
+            credentials: 'include'
+          });
+          const data = await response.json();
+
+          if (data.success) {
+            showToast(data.message || 'Message deleted', 'success');
+            closeDetail();
+
+            // Refresh current folder and trash from server to ensure consistency
+            if (currentFolder === 'inbox') {
+              await fetchInboxMessages();
+              updateUnreadCount();
+              if (window.authUtils && window.authUtils.refreshInboxBadge) {
+                window.authUtils.refreshInboxBadge();
+              }
+            } else if (currentFolder === 'sent') {
+              await fetchSentMessages();
+            } else if (currentFolder === 'trash') {
+              await fetchTrashMessages();
+            }
+
+            // If moved to trash (not permanent delete), also refresh trash
+            if (!isTrash) {
+              await fetchTrashMessages();
+            }
+
+            // If current page is now empty and we're not on page 1, go to previous page
+            const totalPages = getTotalPages();
+            if (currentPage > totalPages && currentPage > 1) {
+              currentPage = Math.max(1, totalPages);
+            }
+
+            renderMessageList();
+          } else {
+            showToast(data.message || 'Failed to delete message', 'error');
+          }
+        } catch (error) {
+          console.error('Error deleting message:', error);
+          showToast('Failed to delete message', 'error');
+        } finally {
+          isOperationInProgress = false;
+          setButtonLoading('deleteBtn', false, isTrash ? '🗑️ Delete Forever' : '🗑️ Delete');
+          setButtonLoading('confirmYes', false, confirmText);
+        }
+      }, confirmText);
+    }
+
+    async function saveAsDraft() {
+      if (isOperationInProgress) return;
+
+      const toInput = document.getElementById('to');
+      const toValue = toInput.value.trim();
+      const toUserId = toInput.dataset.userId;
+      const subject = document.getElementById('subject').value.trim();
+      const body = document.getElementById('body').value.trim();
+
+      isOperationInProgress = true;
+      const saveDraftBtn = document.querySelector('.modal-footer .btn-secondary:nth-child(2)');
+      if (saveDraftBtn) {
+        saveDraftBtn.disabled = true;
+        saveDraftBtn.textContent = 'Saving...';
+      }
+
+      try {
+        let response;
+        if (editingDraftId) {
+          // Update existing draft
+          response = await fetch(`/api/messages/drafts/${editingDraftId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              receiverId: toUserId || null,
+              receiverEmail: toValue,
+              subject: subject,
+              message: body
+            })
+          });
+        } else {
+          // Create new draft
+          response = await fetch('/api/messages/drafts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              receiverId: toUserId || null,
+              receiverEmail: toValue,
+              subject: subject,
+              message: body
+            })
+          });
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          showToast('Draft saved', 'success');
+          closeCompose();
+          await fetchDraftMessages();
+          // Always render the list to reflect changes
+          renderMessageList();
+        } else {
+          showToast(data.message || 'Failed to save draft', 'error');
+        }
+      } catch (error) {
+        console.error('Error saving draft:', error);
+        showToast('Failed to save draft', 'error');
+      } finally {
+        isOperationInProgress = false;
+        if (saveDraftBtn) {
+          saveDraftBtn.disabled = false;
+          saveDraftBtn.textContent = 'Save Draft';
+        }
+      }
+    }
+
+    async function deleteDraft() {
+      if (!editingDraftId || isOperationInProgress) return;
+
+      const draftIdToDelete = editingDraftId; // Save before closeCompose resets it
+
+      showConfirm('Permanently delete this draft?', async function() {
+        isOperationInProgress = true;
+        setButtonLoading('deleteDraftBtn', true);
+
+        try {
+          const response = await fetch(`/api/messages/drafts/${draftIdToDelete}`, {
+            method: 'DELETE',
+            credentials: 'include'
+          });
+          const data = await response.json();
+
+          if (data.success) {
+            showToast('Draft deleted', 'success');
+            closeCompose();
+
+            // Refresh drafts from server to ensure consistency
+            await fetchDraftMessages();
+            renderMessageList();
+          } else {
+            showToast(data.message || 'Failed to delete draft', 'error');
+          }
+        } catch (error) {
+          console.error('Error deleting draft:', error);
+          showToast('Failed to delete draft', 'error');
+        } finally {
+          isOperationInProgress = false;
+          setButtonLoading('deleteDraftBtn', false, 'Delete Draft');
+        }
+      }, 'Delete');
+    }
+
+    async function sendMessage() {
+      if (isOperationInProgress) return;
+
+      const toInput = document.getElementById('to');
+      const toValue = toInput.value.trim();
+      const toUserId = toInput.dataset.userId;
+      const subject = document.getElementById('subject').value.trim();
+      const body = document.getElementById('body').value.trim();
+
+      if (!toValue) {
+        showToast('Please enter a recipient email', 'error');
+        return;
+      }
+
+      if (!subject) {
+        showToast('Please enter a subject', 'error');
+        return;
+      }
+
+      if (!body) {
+        showToast('Please enter a message', 'error');
+        return;
+      }
+
+      isOperationInProgress = true;
+      const sendBtn = document.querySelector('.modal-footer .btn-primary');
+      if (sendBtn) {
+        sendBtn.disabled = true;
+        sendBtn.textContent = 'Sending...';
+      }
+
+      try {
+        let response;
+
+        if (editingDraftId) {
+          // First update the draft, then send it
+          await fetch(`/api/messages/drafts/${editingDraftId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              receiverId: toUserId || null,
+              receiverEmail: toValue,
+              subject: subject,
+              message: body
+            })
+          });
+
+          // Send the draft
+          response = await fetch(`/api/messages/drafts/${editingDraftId}/send`, {
+            method: 'POST',
+            credentials: 'include'
+          });
+        } else {
+          // Send new message
+          response = await fetch('/api/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              receiverId: toUserId || null,
+              receiverEmail: toValue,
+              subject: subject,
+              message: body
+            })
+          });
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          showToast(`Message sent to ${data.recipient}!`, 'success');
+          const wasDraft = editingDraftId !== null;
+          closeCompose();
+
+          // Refresh sent messages and drafts if applicable
+          await fetchSentMessages();
+          if (wasDraft) {
+            await fetchDraftMessages();
+          }
+
+          // Always render the list to reflect changes
+          renderMessageList();
+        } else {
+          showToast(data.message || 'Failed to send message', 'error');
+        }
+      } catch (error) {
+        console.error('Error sending message:', error);
+        showToast('Failed to send message', 'error');
+      } finally {
+        isOperationInProgress = false;
+        if (sendBtn) {
+          sendBtn.disabled = false;
+          sendBtn.textContent = 'Send';
+        }
+      }
+    }
+
+    // Accept a session join request
+    async function acceptRequest(requestId) {
+      if (isOperationInProgress) return;
+
+      // Validate requestId before making the API call
+      if (!requestId || isNaN(parseInt(requestId, 10))) {
+        console.error('Invalid requestId:', requestId);
+        showToast('Invalid request ID. Please refresh and try again.', 'error');
+        return;
+      }
+
+      isOperationInProgress = true;
+      const acceptBtn = document.getElementById('acceptBtn');
+      const denyBtn = document.getElementById('denyBtn');
+      if (acceptBtn) {
+        acceptBtn.disabled = true;
+        acceptBtn.textContent = 'Accepting...';
+      }
+      if (denyBtn) denyBtn.disabled = true;
+
+      try {
+        const response = await fetch(`/api/session-requests/${requestId}/accept`, {
+          method: 'POST',
+          credentials: 'include'
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          showToast(data.message || 'Request accepted!', 'success');
+
+          // Update the message in local state
+          if (selectedMessage) {
+            selectedMessage.requestStatus = 'accepted';
+          }
+
+          // Refresh inbox to get updated data
+          await fetchInboxMessages();
+          renderMessageList();
+
+          // Update the actions display
+          if (selectedMessage) {
+            openMessage(selectedMessage.id);
+          }
+        } else {
+          showToast(data.message || 'Failed to accept request', 'error');
+          if (acceptBtn) {
+            acceptBtn.disabled = false;
+            acceptBtn.textContent = '✓ Accept Student';
+          }
+          if (denyBtn) denyBtn.disabled = false;
+        }
+      } catch (error) {
+        console.error('Error accepting request:', error);
+        showToast('Failed to accept request', 'error');
+        if (acceptBtn) {
+          acceptBtn.disabled = false;
+          acceptBtn.textContent = '✓ Accept Student';
+        }
+        if (denyBtn) denyBtn.disabled = false;
+      } finally {
+        isOperationInProgress = false;
+      }
+    }
+
+    // Deny reason modal handling
+    let pendingDenyRequestId = null;
+
+    function openDenyReasonModal(requestId) {
+      pendingDenyRequestId = requestId;
+      document.getElementById('denyReasonText').value = '';
+      document.getElementById('denyReasonModal').classList.add('active');
+      document.getElementById('denyReasonText').focus();
+    }
+
+    function closeDenyReasonModal() {
+      document.getElementById('denyReasonModal').classList.remove('active');
+      pendingDenyRequestId = null;
+    }
+
+    // Set up the deny confirmation button
+    document.getElementById('denyReasonConfirm').onclick = function() {
+      if (pendingDenyRequestId) {
+        const requestId = pendingDenyRequestId; // Capture before closing modal
+        const reason = document.getElementById('denyReasonText').value.trim();
+        closeDenyReasonModal(); // This sets pendingDenyRequestId to null
+        executeDenyRequest(requestId, reason); // Use the captured value
+      }
+    };
+
+    // Deny a session join request - opens the modal
+    function denyRequest(requestId) {
+      if (isOperationInProgress) return;
+      openDenyReasonModal(requestId);
+    }
+
+    // Actually execute the deny request
+    async function executeDenyRequest(requestId, reason) {
+      // Validate requestId before making the API call
+      if (!requestId || isNaN(parseInt(requestId, 10))) {
+        console.error('Invalid requestId:', requestId);
+        showToast('Invalid request ID. Please refresh and try again.', 'error');
+        return;
+      }
+
+      isOperationInProgress = true;
+      const acceptBtn = document.getElementById('acceptBtn');
+      const denyBtn = document.getElementById('denyBtn');
+      if (denyBtn) {
+        denyBtn.disabled = true;
+        denyBtn.textContent = 'Denying...';
+      }
+      if (acceptBtn) acceptBtn.disabled = true;
+
+      try {
+        const response = await fetch(`/api/session-requests/${requestId}/deny`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ reason: reason || '' })
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          showToast(data.message || 'Request denied', 'success');
+
+          // Update the message in local state
+          if (selectedMessage) {
+            selectedMessage.requestStatus = 'denied';
+          }
+
+          // Refresh inbox to get updated data
+          await fetchInboxMessages();
+          renderMessageList();
+
+          // Update the actions display
+          if (selectedMessage) {
+            openMessage(selectedMessage.id);
+          }
+        } else {
+          showToast(data.message || 'Failed to deny request', 'error');
+          if (denyBtn) {
+            denyBtn.disabled = false;
+            denyBtn.textContent = '✗ Deny Request';
+          }
+          if (acceptBtn) acceptBtn.disabled = false;
+        }
+      } catch (error) {
+        console.error('Error denying request:', error);
+        showToast('Failed to deny request', 'error');
+        if (denyBtn) {
+          denyBtn.disabled = false;
+          denyBtn.textContent = '✗ Deny Request';
+        }
+        if (acceptBtn) acceptBtn.disabled = false;
+      } finally {
+        isOperationInProgress = false;
+      }
+    }
+
+    // Initialize - load messages when page loads
+    loadMessages();
+  </script>
+
+  <script>
+    // Navbar Toggle JavaScript
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    const aboutLink = document.getElementById('aboutLink');
+    const aboutDropdown = document.getElementById('aboutDropdown');
+
+    // Main menu toggle
+    menuToggle.addEventListener('click', () => {
+      // Toggle 'active' class on both the menu and the button
+      navMenu.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+
+      // Ensure the dropdown closes when the main menu is toggled
+      aboutDropdown.classList.remove('dropdown-active');
+    });
+
+    // Dropdown toggle for "About" link (on mobile)
+    aboutLink.addEventListener('click', (e) => {
+      // Check if we are on a mobile view (using a simple screen width check or similar logic)
+      if (window.innerWidth <= 720) {
+        e.preventDefault(); // Prevent the link from navigating immediately
+        aboutDropdown.classList.toggle('dropdown-active');
+      }
+    });
+  </script>
+
+  <!-- Auth utility for managing login state and nav bar -->
+  <script src="js/auth.js"></script>
+</body>
+</html>

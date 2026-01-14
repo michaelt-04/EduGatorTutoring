@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Only ignore package-lock.json at root level, not in subdirectories
+/package-lock.json
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+.DS_Store?
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Database files
+*.sql.backup
+*.db
+
+# Credentials and sensitive files
+*.pem
+*.key
+*.cert

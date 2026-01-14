@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-42SQV5RQNV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-42SQV5RQNV');
+  </script>
+
+  <meta charset="UTF-8" />
+  <title>Session Details - EduGator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--If the user is not logged in, redirect them to the login page -->
+  <script>
+    (function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      document.documentElement.setAttribute('data-auth', isLoggedIn ? 'in' : 'out');
+
+      // If the user is not logged in, send them back to the login page
+      if (!isLoggedIn) {
+        window.location.href = '/auth/login.html';
+      }
+    })();
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    /* ===== Navigation bar styles ===== */
+    nav {
+      background-color: #333;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      gap: 2rem;
+      height: 70px;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex: 1;
+      min-height: 38px;
+    }
+    .logo img {
+      height: 30px;
+      width: auto;
+      display: block;
+    }
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+    }
+    .nav-link:hover {
+      background-color: #555;
+    }
+    .nav-auth-in {
+      display: none !important;
+    }
+    html[data-auth="in"] .nav-auth-in {
+      display: flex !important;
+    }
+    html[data-auth="in"] .nav-auth-out {
+      display: none !important;
+    }
+    html[data-auth="out"] .nav-auth-in {
+      display: none !important;
+    }
+    .inbox-icon img {
+      height: 24px;
+      width: 24px;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #444;
+      min-width: 200px;
+      border-radius: 4px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: none;
+      z-index: 1000;
+    }
+    .nav-item:hover .dropdown,
+    .dropdown-active {
+      display: block;
+    }
+    .dropdown-item {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #555;
+      transition: background-color 0.3s;
+    }
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+    .dropdown-item:hover {
+      background-color: #555;
+    }
+
+    /* ===== Page layout ===== */
+    .page {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .breadcrumbs a {
+      color: #333;
+      text-decoration: none;
+      background: #eaeaea;
+      padding: 0.4rem 0.7rem;
+      border-radius: 0.5rem;
+      transition: background 0.2s;
+    }
+    .breadcrumbs a:hover {
+      background: #d9d9d9;
+    }
+
+    .session-header {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      margin-bottom: 2rem;
+    }
+    .session-type-badge {
+      display: inline-block;
+      background: #2f4ba5;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: capitalize;
+      margin-bottom: 1rem;
+    }
+    .session-type-badge.one_on_one {
+      background: #f59e0b;
+    }
+    .session-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    .session-subtitle {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+    .status-badge {
+      display: inline-block;
+      background: #10b981;
+      color: white;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .session-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .main-info {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .info-section {
+      margin-bottom: 2rem;
+    }
+    .info-section:last-child {
+      margin-bottom: 0;
+    }
+    .info-section h2 {
+      font-size: 1.25rem;
+      color: #333;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+    .info-icon {
+      font-size: 1.5rem;
+      color: #2f4ba5;
+      min-width: 30px;
+    }
+    .info-content {
+      flex: 1;
+    }
+    .info-label {
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.25rem;
+    }
+    .info-value {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .tutor-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .tutor-card h3 {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+    .tutor-profile {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .tutor-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #e8eefc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2f4ba5;
+    }
+    .tutor-info {
+      flex: 1;
+    }
+    .tutor-name {
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.25rem;
+    }
+    .tutor-rating {
+      color: #f59e0b;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .view-profile-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: #f3f4f6;
+      color: #333;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .view-profile-btn:hover {
+      background: #e5e7eb;
+    }
+
+    .action-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .capacity-info {
+      background: #f9fafb;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .capacity-text {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+    .capacity-numbers {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #333;
+    }
+
+    /* Book button: opens the request modal instead of instantly booking */
+    .book-button {
+      width: 100%;
+      padding: 1rem;
+      background: #2f4ba5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .book-button:hover {
+      background: #1e3a8a;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: #666;
+    }
+    .error-state {
+      background: white;
+      border-radius: 12px;
+      padding: 3rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .error-state p {
+      color: #ef4444;
+      font-size: 1.1rem;
+    }
+
+    /* Responsive layout for smaller screens */
+    @media (max-width: 768px) {
+      .session-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== Modal styles for "Request to Join" popup ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      z-index: 900;
+    }
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 480px;
+      width: 90%;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      display: none;
+      z-index: 1000;
+    }
+    .modal-header {
+      margin-bottom: 1rem;
+    }
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.25rem;
+    }
+    .modal-subtitle {
+      font-size: 0.95rem;
+      color: #666;
+    }
+    .modal-session-summary {
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+    .modal-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .modal-textarea {
+      width: 100%;
+      min-height: 90px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      padding: 0.75rem;
+      font-size: 0.95rem;
+      resize: vertical;
+    }
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+    .modal-btn {
+      padding: 0.7rem 1.1rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .modal-btn.secondary {
+      background: #e5e7eb;
+      color: #374151;
+    }
+    .modal-btn.secondary:hover {
+      background: #d1d5db;
+    }
+    .modal-btn.primary {
+      background: #2f4ba5;
+      color: white;
+    }
+    .modal-btn.primary:hover {
+      background: #1f3a8a;
+    }
+    .modal-status {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+    }
+    .modal-status.success {
+      color: #059669;
+    }
+    .modal-status.error {
+      color: #dc2626;
+    }
+    .demo-banner {
+            background-color: #06402B; /* Dark Green */
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-banner">
+        SFSU Software Engineering Project CSC 648-848, Fall 2025. For Demonstration Only
+    </div>
+  <nav>
+    <div class="nav-container">
+      <div class="nav-left">
+        <a href="index.html" class="logo">
+          <img src="public/nav_logo.png" alt="EduGator Logo" />
+        </a>
+      </div>
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" id="aboutLink">About</a>
+          <div class="dropdown" id="aboutDropdown">
+            <a href="about/about-grady.html" class="dropdown-item">Grady Walworth - Team Lead</a>
+            <a href="about/about-michael.html" class="dropdown-item">Michael Thompson - Github Lead</a>
+            <a href="about/about-tejas.html" class="dropdown-item">Tejas Rajan - Frontend Lead</a>
+            <a href="about/about-kameron.html" class="dropdown-item">Kameron Jacob - Frontend Developer</a>
+            <a href="about/about-chris.html" class="dropdown-item">Chris Chan - Backend Lead</a>
+            <a href="about/about-hardy.html" class="dropdown-item">Hardy Chang - Backend Developer</a>
+          </div>
+        </li>
+        <li class="nav-item nav-auth-in" id="inbox-placeholder">
+          <a href="inbox.html" class="nav-link inbox-icon">
+            <img src="public/inbox-icon.png" alt="Messages">
+          </a>
+        </li>
+        <li class="nav-item nav-auth-in">
+          <a href="studentDashboard.html" class="nav-link">Profile</a>
+        </li>
+        <li class="nav-item nav-auth-out">
+          <a href="auth/login.html" class="nav-link">Login</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="page">
+    <div class="breadcrumbs">
+      <a href="#" id="backButton">← Back</a>
+    </div>
+
+    <div id="loading" class="loading">Loading session details...</div>
+    <div id="errorState" class="error-state" style="display:none;">
+      <p></p>
+    </div>
+
+    <div id="sessionContent" style="display:none;">
+      <div class="session-header">
+        <div class="session-type-badge" id="sessionTypeBadge"></div>
+        <h1 class="session-title" id="sessionTitle"></h1>
+        <p class="session-subtitle" id="sessionSubtitle"></p>
+        <span class="status-badge" id="statusBadge"></span>
+        <div class="session-courses" id="sessionCourses" style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
+      </div>
+
+      <div class="session-grid">
+        <div class="main-info">
+          <div class="info-section">
+            <h2>📅 Session Details</h2>
+            <div class="info-item">
+              <div class="info-icon">📆</div>
+              <div class="info-content">
+                <div class="info-label">Date</div>
+                <div class="info-value" id="sessionDate"></div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">🕐</div>
+              <div class="info-content">
+                <div class="info-label">Time</div>
+                <div class="info-value" id="sessionTime"></div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">⏱️</div>
+              <div class="info-content">
+                <div class="info-label">Duration</div>
+                <div class="info-value" id="sessionDuration"></div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">📍</div>
+              <div class="info-content">
+                <div class="info-label">Location</div>
+                <div class="info-value" id="sessionLocation"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h2>📚 Subject Information</h2>
+            <div class="info-item">
+              <div class="info-icon">📖</div>
+              <div class="info-content">
+                <div class="info-label">Subject</div>
+                <div class="info-value" id="sessionSubject"></div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">ℹ️</div>
+              <div class="info-content">
+                <div class="info-label">Session Type</div>
+                <div class="info-value" id="sessionTypeText"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <div class="tutor-card">
+            <h3>Your Tutor</h3>
+            <div class="tutor-profile">
+              <div class="tutor-avatar" id="tutorAvatar"></div>
+              <div class="tutor-info">
+                <div class="tutor-name" id="tutorName"></div>
+                <div class="tutor-rating" id="tutorRating"></div>
+              </div>
+            </div>
+            <button class="view-profile-btn" onclick="viewTutorProfile()">View Full Profile</button>
+          </div>
+
+          <div class="action-card">
+            <div id="capacityInfo" style="display:none;">
+              <div class="capacity-info">
+                <div class="capacity-text">Available Spots</div>
+                <div class="capacity-numbers" id="capacityNumbers"></div>
+              </div>
+            </div>
+
+            <!--
+              Book button:
+              Opens a modal where the student can submit a request
+              to join this session. The request will be sent to the
+              tutor's inbox as a pending item.
+            -->
+            <button
+              class="book-button"
+              id="bookButton"
+              type="button"
+              onclick="openRequestModal()"
+            >
+              Request to Join Session
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!--
+    Session Request Modal:
+    This popup allows logged-in students to send a join request to the tutor.
+    The request will be saved and appear in the tutor’s inbox for approval.
+  -->
+  <div id="requestOverlay" class="modal-overlay"></div>
+  <div id="requestModal" class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title">Request to Join</h2>
+      <p class="modal-subtitle">
+        Send a short message to the tutor about why you’d like to join this session.
+      </p>
+    </div>
+
+    <div class="modal-session-summary" id="modalSessionSummary">
+      <!-- Filled dynamically with subject, date, and time -->
+    </div>
+
+    <label class="modal-label" for="requestMessage">
+      Message to Tutor (optional)
+    </label>
+    <textarea
+      id="requestMessage"
+      class="modal-textarea"
+      placeholder="Hi, I’d like to join this session because..."
+    ></textarea>
+
+    <div class="modal-footer">
+      <button
+        class="modal-btn secondary"
+        type="button"
+        onclick="closeRequestModal()"
+      >
+        Cancel
+      </button>
+      <button
+        class="modal-btn primary"
+        type="button"
+        onclick="sendSessionRequest()"
+        id="sendRequestButton"
+      >
+        Send Request
+      </button>
+    </div>
+
+    <div id="requestStatus" class="modal-status"></div>
+  </div>
+
+  <script>
+    // ===== Demo configuration =====
+
+    // When DEMO_MODE is true, the page uses in-memory session data.
+    // When false, it calls the real backend API at /api/sessions/:id
+    const DEMO_MODE = false;
+
+    // Demo session data (used only when DEMO_MODE === true)
+    const DEMO_SESSIONS = {
+      1: {
+        id: 1,
+        tutor: "Dr. Sarah Johnson",
+        tutorId: 1,
+        tutorRating: 4.8,
+        date: "2025-11-15",
+        time: "14:00",
+        duration: 60,
+        type: "one_on_one",
+        subject: "Data Structures",
+        location: "Library Room 204",
+        status: "available"
+      },
+      2: {
+        id: 2,
+        tutor: "Dr. Sarah Johnson",
+        tutorId: 1,
+        tutorRating: 4.8,
+        date: "2025-11-15",
+        time: "16:00",
+        duration: 60,
+        type: "open",
+        subject: "Algorithms",
+        location: "Study Hall B",
+        capacity: 8,
+        enrolled: 5,
+        status: "available"
+      },
+      3: {
+        id: 3,
+        tutor: "Prof. Michael Chen",
+        tutorId: 2,
+        tutorRating: 4.9,
+        date: "2025-11-18",
+        time: "10:00",
+        duration: 90,
+        type: "open",
+        subject: "Python Programming",
+        location: "Computer Lab 3",
+        capacity: 15,
+        enrolled: 12,
+        status: "available"
+      },
+      4: {
+        id: 4,
+        tutor: "Dr. Sarah Johnson",
+        tutorId: 1,
+        tutorRating: 4.8,
+        date: "2025-11-18",
+        time: "14:30",
+        duration: 60,
+        type: "one_on_one",
+        subject: "Machine Learning",
+        location: "Online via Zoom",
+        status: "available"
+      },
+      5: {
+        id: 5,
+        tutor: "Prof. Emily Rodriguez",
+        tutorId: 3,
+        tutorRating: 4.7,
+        date: "2025-11-20",
+        time: "13:00",
+        duration: 120,
+        type: "open",
+        subject: "Web Development",
+        location: "Tech Building Room 105",
+        capacity: 10,
+        enrolled: 7,
+        status: "available"
+      },
+      6: {
+        id: 6,
+        tutor: "Dr. James Wilson",
+        tutorId: 4,
+        tutorRating: 4.6,
+        date: "2025-11-22",
+        time: "15:00",
+        duration: 60,
+        type: "one_on_one",
+        subject: "Calculus",
+        location: "Math Building 201",
+        status: "available"
+      },
+      7: {
+        id: 7,
+        tutor: "Prof. Michael Chen",
+        tutorId: 2,
+        tutorRating: 4.9,
+        date: "2025-11-25",
+        time: "11:00",
+        duration: 90,
+        type: "open",
+        subject: "Database Design",
+        location: "Computer Lab 2",
+        capacity: 12,
+        enrolled: 9,
+        status: "available"
+      },
+      8: {
+        id: 8,
+        tutor: "Dr. Sarah Johnson",
+        tutorId: 1,
+        tutorRating: 4.8,
+        date: "2025-11-27",
+        time: "10:00",
+        duration: 60,
+        type: "one_on_one",
+        subject: "Discrete Math",
+        location: "Library Room 204",
+        status: "available"
+      }
+    };
+
+    // Holds the currently loaded session object
+    let currentSession = null;
+
+    // References to modal DOM elements (initialized after DOM is ready)
+    let requestOverlay;
+    let requestModal;
+    let requestMessageInput;
+    let requestStatusText;
+
+    /**
+     * Reads the "id" query parameter from the URL.
+     * Example: /session.html?id=3 → returns "3"
+     */
+    function getSessionId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("id");
+    }
+
+    /**
+     * Configures the "Back" link based on the "source" query parameter.
+     * This lets us return to search, calendar, dashboard, or tutor profile with a proper label.
+     */
+    function setupBackButton() {
+      const params = new URLSearchParams(window.location.search);
+      const source = params.get("source");
+      const returnParams = params.get("returnParams");
+      const tutorId = params.get("tutorId");
+      const backButton = document.getElementById("backButton");
+
+      const sourceConfig = {
+        search: { text: "← Back to Search", url: "search.html" },
+        calendar: { text: "← Back to Calendar", url: "calendar.html" },
+        dashboard: { text: "← Back to Dashboard", url: "studentDashboard.html" },
+        tutor: { text: "← Back to Tutor Profile", url: `tutorProfile.html?id=${tutorId}` }
+      };
+
+      const config =
+        sourceConfig[source] || {
+          text: "← Back",
+          url: "search.html"
+        };
+
+      let finalUrl = config.url;
+      if (source === "search" && returnParams) {
+        finalUrl += decodeURIComponent(returnParams);
+      }
+
+      backButton.textContent = config.text;
+      backButton.href = finalUrl;
+    }
+
+    /**
+     * Formats a YYYY-MM-DD date string into a more readable form.
+     */
+    function formatDate(dateStr) {
+      const date = new Date(dateStr + "T00:00:00");
+      return date.toLocaleDateString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+    }
+
+    /**
+     * Formats a HH:mm 24-hour time string into a 12-hour format.
+     */
+    function formatTime(time) {
+      const [hours, minutes] = time.split(":");
+      const hour = parseInt(hours, 10);
+      const ampm = hour >= 12 ? "PM" : "AM";
+      const displayHour = hour % 12 || 12;
+      return `${displayHour}:${minutes} ${ampm}`;
+    }
+
+    /**
+     * Shows an error message in the main content area.
+     */
+    function showError(message) {
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("sessionContent").style.display = "none";
+      const errorState = document.getElementById("errorState");
+      errorState.style.display = "block";
+      errorState.querySelector("p").textContent = message;
+    }
+
+    /**
+     * Renders the session details into the page.
+     */
+    function displaySession(session) {
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("sessionContent").style.display = "block";
+
+      // Header
+      const typeBadge = document.getElementById("sessionTypeBadge");
+      typeBadge.textContent = session.type.replace(/_/g, " ");
+      typeBadge.className = `session-type-badge ${session.type}`;
+
+      document.getElementById("sessionTitle").textContent = session.subject;
+      document.getElementById("sessionSubtitle").textContent = `with ${session.tutor}`;
+      document.getElementById("statusBadge").textContent = session.status;
+
+      // Display courses (from session-specific courses, not all tutor courses)
+      const coursesContainer = document.getElementById("sessionCourses");
+      if (session.courses && session.courses.length > 0) {
+        // Backend returns courses as an array from session_courses join
+        const coursesList = Array.isArray(session.courses)
+          ? session.courses
+          : session.courses.split(', ').filter(c => c.trim());
+
+        coursesContainer.innerHTML = coursesList.map(course =>
+          `<span style="background: #e5e7eb; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.9rem; font-weight: 500; color: #333;">${course.trim()}</span>`
+        ).join('');
+      }
+
+      // Details
+      document.getElementById("sessionDate").textContent = formatDate(session.date);
+      document.getElementById("sessionTime").textContent = formatTime(session.time);
+      document.getElementById("sessionDuration").textContent = `${session.duration} minutes`;
+      document.getElementById("sessionLocation").textContent = session.location;
+      document.getElementById("sessionSubject").textContent = session.subject;
+      document.getElementById("sessionTypeText").textContent =
+        session.type === "one_on_one"
+          ? "One-on-One Session"
+          : "Open Group Session";
+
+      // Tutor info
+      document.getElementById("tutorAvatar").textContent = session.tutor.charAt(0);
+      document.getElementById("tutorName").textContent = session.tutor;
+      document.getElementById("tutorRating").textContent = `⭐ ${session.tutorRating.toFixed(
+        1
+      )}`;
+
+      // Capacity (for open group sessions)
+      if (session.capacity) {
+        const capacityInfo = document.getElementById("capacityInfo");
+        capacityInfo.style.display = "block";
+        const spotsLeft = session.capacity - (session.enrolled || 0);
+        document.getElementById("capacityNumbers").textContent = `${spotsLeft} / ${
+          session.capacity
+        }`;
+      }
+    }
+
+    /**
+     * Loads the session based on the URL parameter.
+     * Uses demo data or calls the real backend endpoint.
+     */
+    function loadSession() {
+      const sessionId = getSessionId();
+
+      if (!sessionId) {
+        showError("No session ID provided. Please select a session from the calendar.");
+        return;
+      }
+
+      // Use demo sessions if DEMO_MODE is enabled
+      if (DEMO_MODE) {
+        setTimeout(() => {
+          const session = DEMO_SESSIONS[sessionId];
+          if (!session) {
+            showError("Session not found. It may have been cancelled or removed.");
+            return;
+          }
+          currentSession = session;
+          displaySession(session);
+        }, 400);
+        return;
+      }
+
+      // Real API call to load the session
+      fetch(`/api/sessions/${sessionId}`)
+        .then((response) => {
+          if (!response.ok) {
+            if (response.status === 404) {
+              throw new Error(
+                "Session not found. It may have been cancelled or removed."
+              );
+            }
+            throw new Error("Failed to load session details.");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          // Extract data from the response
+          const sessionData = result.success ? result.data : result;
+          currentSession = sessionData;
+          displaySession(sessionData);
+          // Check request status after displaying session
+          checkRequestStatus(sessionId);
+        })
+        .catch((error) => {
+          console.error("Error loading session:", error);
+          showError(error.message || "Failed to load session details.");
+        });
+    }
+
+    /**
+     * Check if the current user has already requested or is enrolled in this session
+     */
+    function checkRequestStatus(sessionId) {
+      fetch(`/api/sessions/${sessionId}/request-status`, {
+        credentials: 'include'
+      })
+        .then(response => response.json())
+        .then(result => {
+          if (result.success) {
+            updateBookButton(result.status);
+          }
+        })
+        .catch(error => {
+          console.error('Error checking request status:', error);
+        });
+    }
+
+    /**
+     * Update the book button based on request status
+     */
+    function updateBookButton(status) {
+      const bookButton = document.getElementById('bookButton');
+      if (!bookButton) return;
+
+      switch (status) {
+        case 'pending':
+          bookButton.textContent = 'Request Pending';
+          bookButton.disabled = true;
+          bookButton.style.background = '#f59e0b';
+          bookButton.style.cursor = 'not-allowed';
+          break;
+        case 'accepted':
+        case 'enrolled':
+          bookButton.textContent = 'Already Enrolled';
+          bookButton.disabled = true;
+          bookButton.style.background = '#10b981';
+          bookButton.style.cursor = 'not-allowed';
+          break;
+        case 'denied':
+          // Denied students can request again
+          bookButton.textContent = 'Request to Join Session';
+          bookButton.disabled = false;
+          bookButton.style.background = '#2f4ba5';
+          bookButton.style.cursor = 'pointer';
+          break;
+        default:
+          // No existing request
+          bookButton.textContent = 'Request to Join Session';
+          bookButton.disabled = false;
+          bookButton.style.background = '#2f4ba5';
+          bookButton.style.cursor = 'pointer';
+      }
+    }
+
+    /**
+     * Opens the "Request to Join" modal and pre-fills the summary
+     * with the current session's subject, date, and time.
+     */
+    function openRequestModal() {
+      if (!currentSession) return;
+
+      // Fill the session summary text in the modal
+      const summary = document.getElementById("modalSessionSummary");
+      summary.textContent = `${currentSession.subject} with ${currentSession.tutor} • ` +
+        `${formatDate(currentSession.date)} at ${formatTime(currentSession.time)}`;
+
+      // Clear previous message and status
+      requestMessageInput.value = "";
+      requestStatusText.textContent = "";
+      requestStatusText.className = "modal-status";
+
+      // Show overlay + modal
+      requestOverlay.style.display = "block";
+      requestModal.style.display = "block";
+    }
+
+    /**
+     * Closes the "Request to Join" modal and clears temporary state.
+     */
+    function closeRequestModal() {
+      requestOverlay.style.display = "none";
+      requestModal.style.display = "none";
+      requestStatusText.textContent = "";
+      requestStatusText.className = "modal-status";
+    }
+
+    /**
+     * Sends a join request for the current session to the backend.
+     * The backend is expected to:
+     *  - Read the logged-in student from the session/cookie
+     *  - Create a new "pending" request for this session and tutor
+     *  - Make it visible in the tutor's inbox
+     */
+    function sendSessionRequest() {
+      if (!currentSession) return;
+
+      const message = requestMessageInput.value.trim();
+
+      // Disable the button while the request is being sent
+      const sendButton = document.getElementById("sendRequestButton");
+      sendButton.disabled = true;
+      requestStatusText.textContent = "Sending request...";
+      requestStatusText.className = "modal-status";
+
+      // When in demo mode, we do not hit the real API
+      if (DEMO_MODE) {
+        setTimeout(() => {
+          requestStatusText.textContent =
+            "Demo mode: request would be sent to the tutor’s inbox.";
+          requestStatusText.className = "modal-status success";
+          sendButton.disabled = false;
+        }, 600);
+        return;
+      }
+
+      // Payload sent to the backend.
+      // Note: student information should be derived from the auth session on the server.
+      const payload = {
+        sessionId: currentSession.id,
+        tutorId: currentSession.tutorId,
+        message
+      };
+
+      fetch("/api/session-requests", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include", // include cookies for auth
+        body: JSON.stringify(payload)
+      })
+        .then(async (response) => {
+          const data = await response.json().catch(() => ({}));
+
+          if (!response.ok) {
+            const errorMessage =
+              data.message || "Failed to send request. Please try again.";
+            throw new Error(errorMessage);
+          }
+
+          // Show a success message in the modal
+          requestStatusText.textContent =
+            "Your request has been sent to the tutor’s inbox.";
+          requestStatusText.className = "modal-status success";
+
+          // Optionally, you can automatically close the modal after a short delay
+          setTimeout(() => {
+            closeRequestModal();
+          }, 1200);
+        })
+        .catch((error) => {
+          console.error("Error sending session request:", error);
+          requestStatusText.textContent = error.message;
+          requestStatusText.className = "modal-status error";
+        })
+        .finally(() => {
+          sendButton.disabled = false;
+        });
+    }
+
+    /**
+     * Navigates to the tutor's profile page for this session.
+     */
+    function viewTutorProfile() {
+      if (currentSession) {
+        window.location.href = `tutorProfile.html?id=${currentSession.tutorId}`;
+      }
+    }
+
+    // Initialize the page once the DOM is fully loaded
+    window.addEventListener("DOMContentLoaded", () => {
+      // Cache modal-related DOM elements
+      requestOverlay = document.getElementById("requestOverlay");
+      requestModal = document.getElementById("requestModal");
+      requestMessageInput = document.getElementById("requestMessage");
+      requestStatusText = document.getElementById("requestStatus");
+
+      // Close the modal when clicking on the overlay background
+      requestOverlay.addEventListener("click", closeRequestModal);
+
+      // Setup back button and load the session details
+      setupBackButton();
+      loadSession();
+    });
+  </script>
+
+  <!-- Shared auth utilities (controls nav state, logout, etc.) -->
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-42SQV5RQNV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-42SQV5RQNV');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EduGator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        nav {
+            background-color: #333;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            gap: 2rem;
+            height: 70px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex: 1;
+            min-height: 38px;
+        }
+
+        .logo img {
+            height: 30px;
+            width: auto;
+            display: block;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link:hover {
+            background-color: #555;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #444;
+            min-width: 200px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+        }
+
+        .nav-item:hover .dropdown {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #555;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background-color: #555;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .main-content {
+            max-width: 500px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .login-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .login-container h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .login-subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #333;
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password {
+            color: #333;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 0.9rem;
+            font-size: 1.1rem;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .login-button:hover {
+            background-color: #555;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .register-link a {
+            color: #333;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .success-message {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .demo-banner {
+            background-color: #06402B; /* Dark Green */
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-banner">
+        SFSU Software Engineering Project CSC 648-848, Fall 2025. For Demonstration Only
+    </div>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="../index.html" class="logo">
+                    <img src="../public/nav_logo.png" alt="EduGator Logo">
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">About</a>
+                    <div class="dropdown">
+                        <a href="../about/about-grady.html" class="dropdown-item">Grady Walworth - Team Lead</a>
+                        <a href="../about/about-michael.html" class="dropdown-item">Michael Thompson - Github Lead</a>
+                        <a href="../about/about-tejas.html" class="dropdown-item">Tejas Rajan - Frontend Lead</a>
+                        <a href="../about/about-kameron.html" class="dropdown-item">Kameron Jacob - Frontend Developer</a>
+                        <a href="../about/about-chris.html" class="dropdown-item">Chris Chan - Backend Lead</a>
+                        <a href="../about/about-hardy.html" class="dropdown-item">Hardy Chang - Backend Developer</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="login.html" class="nav-link">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="login-container">
+            <h1>Welcome Back</h1>
+            <p class="login-subtitle">Sign in to your EduGator account</p>
+
+            <div id="error-message" class="error-message"></div>
+            <div id="success-message" class="success-message"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">SFSU Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your SFSU email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="form-footer">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember">
+                        Remember me
+                    </label>
+                </div>
+
+                <button type="submit" class="login-button">Login</button>
+
+                <div class="register-link">
+                    Don't have an account? <a href="register.html">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = `${window.location.origin}/api/auth`;
+
+        // Helper function to show messages
+        function showMessage(message, isError = false) {
+            const errorElement = document.getElementById('error-message');
+            const successElement = document.getElementById('success-message');
+
+            if (isError) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+                successElement.style.display = 'none';
+            } else {
+                successElement.textContent = message;
+                successElement.style.display = 'block';
+                errorElement.style.display = 'none';
+            }
+
+            // Hide after 5 seconds
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+                successElement.style.display = 'none';
+            }, 5000);
+        }
+
+        // Login form handler
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            // Hide previous messages
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+
+            // Basic validation
+            if (!email || !password) {
+                showMessage('Please enter both email and password', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showMessage('Login successful! Redirecting...', false);
+
+                    // Cache minimal auth state to localStorage to prevent nav bar flicker
+                    // Only stores isLoggedIn flag and user role (not sensitive data)
+                    if (data.user && data.user.role) {
+                        localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('userRole', data.user.role);
+                    }
+
+                    // Redirect to home page
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 1000);
+                } else {
+                    showMessage(data.message || 'Login failed. Please check your credentials.', true);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showMessage('Network error. Please check your connection and try again.', true);
+            }
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch(`${API_URL}/me`, {
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.user) {
+                        // User is already logged in, redirect to home page
+                        window.location.href = '../index.html';
+                    }
+                }
+            } catch (error) {
+                // User not logged in, stay on login page
+                console.log('No active session');
+            }
+        });
+    </script>
+
+    <!-- Auth utility for managing login state and nav bar -->
+    <script src="../js/auth.js"></script>
+</body>
+</html>

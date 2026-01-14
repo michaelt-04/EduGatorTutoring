@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-42SQV5RQNV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-42SQV5RQNV');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Profile - EduGator</title>
+    <script>
+        // Check localStorage and set data-auth attribute immediately
+        (function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            document.documentElement.setAttribute('data-auth', isLoggedIn ? 'in' : 'out');
+        })();
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        nav {
+            background-color: #333;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            gap: 2rem;
+            height: 70px;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex: 1;
+            min-height: 38px;
+        }
+        .logo img {
+            height: 30px;
+            width: auto;
+            display: block;
+        }
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Auth-based nav visibility */
+        .nav-auth-in {
+            display: none !important;
+        }
+        html[data-auth="in"] .nav-auth-in {
+            display: flex !important;
+        }
+        html[data-auth="in"] .nav-auth-out {
+            display: none !important;
+        }
+        html[data-auth="out"] .nav-auth-in {
+            display: none !important;
+        }
+        .inbox-icon img {
+            height: 24px;
+            width: 24px;
+            display: block;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-link:hover {
+            background-color: #555;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #444;
+            min-width: 200px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+        }
+
+        /* Change hover to a class that JS can control on mobile/desktop */
+        .nav-item:hover .dropdown, .dropdown-active {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #555;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background-color: #555;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Responsive Navbar Styles */
+        .menu-toggle {
+            display: none; /* Hide toggle button on desktop */
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001; /* Ensure it's above the menu when open */
+            padding: 0;
+            width: 30px; /* Define button size */
+            height: 25px;
+            position: relative; /* For absolute positioning of bars */
+        }
+
+        /* Style for the hamburger bars */
+        .menu-toggle span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            margin: 5px 0;
+            background-color: white;
+            transition: all 0.4s ease-in-out;
+            border-radius: 2px;
+        }
+
+        /* Transformation for the 'X' shape when menu is active */
+        .menu-toggle.active .bar1 {
+            transform: translate(0, 8px) rotate(-45deg);
+        }
+
+        .menu-toggle.active .bar2 {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .bar3 {
+            transform: translate(0, -8px) rotate(45deg);
+        }
+        @media (max-width: 720px) {
+            .menu-toggle {
+                display: block; /* Show toggle button on mobile */
+            }
+
+            .nav-menu {
+                display: none; /* Hide menu by default on mobile */
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 68px; /* Position right below the nav bar */
+                left: 0;
+                background-color: #333;
+                box-shadow: 0 4px 6px rgba(0,0,0,.1);
+                padding: 1rem 0;
+                gap: 0;
+            }
+
+            .nav-menu.active {
+                display: flex; /* Show menu when active class is present */
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                display: block;
+                padding: 0.75rem 2rem;
+                text-align: left;
+            }
+
+            .dropdown {
+                position: static; /* Change dropdown position for mobile */
+                width: 100%;
+                background-color: #444;
+                box-shadow: none;
+                border-radius: 0;
+                /* Ensure dropdown only shows with JS class on mobile */
+                display: none !important;
+            }
+
+            .dropdown-active.dropdown {
+                display: block !important;
+            }
+
+            .dropdown-item {
+                padding: 0.75rem 3rem; /* Indent dropdown items */
+            }
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .breadcrumbs a {
+            color: #333;
+            text-decoration: none;
+            background: #eaeaea;
+            padding: 0.4rem 0.7rem;
+            border-radius: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .breadcrumbs a:hover {
+            background: #d9d9d9;
+        }
+
+        .profile-header {
+            background: #fff;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .profile-image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .edit-profile-btn {
+            padding: 0.5rem 1rem;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .edit-profile-btn:hover {
+            background-color: #555;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .profile-info h1 {
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .profile-subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .bio-section {
+            margin-top: 1rem;
+        }
+
+        .bio-label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .bio-text {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            color: #333;
+        }
+
+        .view-all-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            background: #eaeaea;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .view-all-link:hover {
+            background: #d9d9d9;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            max-width: 900px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .courses-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            margin-bottom: 3rem;
+        }
+
+        .course-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .course-card h3 {
+            color: #333;
+            margin-bottom: 0.25rem;
+            flex: 1;
+        }
+
+        .course-code {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+
+        .course-meta {
+            color: #666;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #333;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #555;
+        }
+
+        .btn-secondary {
+            background-color: #eaeaea;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d9d9d9;
+        }
+
+        .sessions-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .session-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .session-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .session-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .session-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-upcoming {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background-color: #e2e3e5;
+            color: #383d41;
+        }
+
+        .session-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .session-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .session-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .empty-state {
+            background: #fff;
+            border-radius: 10px;
+            padding: 3rem 2rem;
+            text-align: center;
+            color: #666;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+        }
+
+        .empty-state h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 3rem;
+            font-size: 1.1rem;
+        }
+        .error-state {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .error-state p {
+            color: #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .profile-image-container {
+                margin: 0 auto;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sessions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .course-actions,
+            .session-actions {
+                flex-direction: column;
+            }
+        }
+
+
+        /* TEST MODAL CSS FOR "MANAGE COURSES" BUTTON */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .message-container {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
+            z-index: 2000;
+        }
+
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .success-message {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .confirm-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirm-modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .confirm-modal-content h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .confirm-modal-content p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .confirm-modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+        
+        .demo-banner {
+            background-color: #06402B; /* Dark Green */
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-banner">
+        SFSU Software Engineering Project CSC 648-848, Fall 2025. For Demonstration Only
+    </div>
+    <div class="message-container">
+        <div id="error-message" class="error-message"></div>
+        <div id="success-message" class="success-message"></div>
+    </div>
+    <div id="confirmModal" class="confirm-modal" style="display: none;">
+        <div class="confirm-modal-content">
+            <h3 id="confirmTitle">Confirm Action</h3>
+            <p id="confirmMessage">Are you sure?</p>
+            <div class="confirm-modal-actions">
+                <button class="btn btn-secondary" id="confirmCancel">Cancel</button>
+                <button class="btn btn-primary" id="confirmOk">Confirm</button>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="logo">
+                    <img src="public/nav_logo.png" alt="EduGator Logo">
+                </a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item">
+                    <!-- Added ID to the about link -->
+                    <a href="#" class="nav-link" id="aboutLink">About</a>
+                    <!-- Added ID to the dropdown -->
+                    <div class="dropdown" id="aboutDropdown">
+                        <a href="about/about-grady.html" class="dropdown-item">Grady Walworth - Team Lead</a>
+                        <a href="about/about-michael.html" class="dropdown-item">Michael Thompson - Github Lead</a>
+                        <a href="about/about-tejas.html" class="dropdown-item">Tejas Rajan - Frontend Lead</a>
+                        <a href="about/about-kameron.html" class="dropdown-item">Kameron Jacob - Frontend Developer</a>
+                        <a href="about/about-chris.html" class="dropdown-item">Chris Chan - Backend Lead</a>
+                        <a href="about/about-hardy.html" class="dropdown-item">Hardy Chang - Backend Developer</a>
+                    </div>
+                </li>
+                <li class="nav-item nav-auth-in"><a href="calendar.html" class="nav-link">Calendar</a></li>
+                <li class="nav-item nav-auth-in" id="inbox-placeholder">
+                    <a href="inbox.html" class="nav-link inbox-icon">
+                      <img src="public/inbox-icon.png" alt="Messages">
+                    </a>
+                  </li>
+                <li class="nav-item nav-auth-in" id="profile-placeholder"><a href="studentDashboard.html" class="nav-link">Profile</a></li>
+                <li class="nav-item nav-auth-out"><a href="auth/login.html" class="nav-link">Login</a></li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+                <span class="bar1"></span>
+                <span class="bar2"></span>
+                <span class="bar3"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="page">
+        <!-- Loading state - visible by default -->
+        <div id="loading" class="loading">Loading dashboard...</div>
+
+        <!-- Error state - hidden by default -->
+        <div id="errorState" class="error-state" style="display:none;">
+            <p></p>
+        </div>
+
+        <!-- Dashboard content - hidden by default -->
+        <div id="dashboardContent" style="display:none;">
+        <div class="breadcrumbs">
+            <a href="index.html">← Back to Home</a>
+        </div>
+
+        <div class="profile-header">
+            <div class="profile-image-container">
+                <img src="public/edugator_logo_egg.png" alt="Tutor Profile" class="profile-image">
+                <button class="edit-profile-btn" onclick="openEditProfileModal()">Edit Profile</button>
+            </div>
+            <div class="profile-info">
+                <div>
+                    <h1>Dr. Sarah Martinez</h1>
+                    <p class="profile-subtitle">Mathematics & Computer Science Tutor • Senior</p>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">smartinez@sfsu.edu</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Member Since</span>
+                        <span class="info-value">September 2023</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Rating</span>
+                        <span class="info-value">4.9 / 5.0</span>
+                    </div>
+                </div>
+
+                <div class="bio-section">
+                    <div class="bio-label">About Me</div>
+                    <p class="bio-text">
+                        Senior Computer Science student with a passion for teaching mathematics and programming.
+                        I specialize in helping students understand complex algorithms, data structures, and mathematical concepts.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Courses Offered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Active Sessions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">47</div>
+                <div class="stat-label">Students Helped</div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>Courses I Offer Tutoring For</h2>
+            <a href="#" class="view-all-link" onclick="openManageCourseModal(); return false;">Add Course</a>
+        </div>
+
+        <div class="courses-grid">
+            <div class="course-card">
+                <div class="course-header">
+                    <div>
+                        <h3>Data Structures</h3>
+                        <span class="course-code">CSC 415</span>
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div><strong>Active Students:</strong> 12</div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-primary">View Students</button>
+                    <button class="btn btn-secondary">Edit Details</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div>
+                        <h3>Algorithms</h3>
+                        <span class="course-code">CSC 645</span>
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div><strong>Active Students:</strong> 8</div>
+                    <!--<div><strong>Hourly Rate:</strong> $30/hour</div>-->
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-primary">View Students</button>
+                    <button class="btn btn-secondary">Edit Details</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div>
+                        <h3>Calculus I</h3>
+                        <span class="course-code">MATH 226</span>
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div><strong>Active Students:</strong> 15</div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-primary">View Students</button>
+                    <button class="btn btn-secondary">Edit Details</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div>
+                        <h3>Linear Algebra</h3>
+                        <span class="course-code">MATH 245</span>
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div><strong>Active Students:</strong> 7</div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-primary">View Students</button>
+                    <button class="btn btn-secondary">Edit Details</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div>
+                        <h3>Discrete Mathematics</h3>
+                        <span class="course-code">MATH 325</span>
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div><strong>Active Students:</strong> 5</div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-primary">View Students</button>
+                    <button class="btn btn-secondary">Edit Details</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>My Posted Sessions</h2>
+            <a href="javascript:void(0)" class="view-all-link" onclick="openCreateSessionModal()">Create New Session</a>
+        </div>
+
+        <div class="sessions-grid">
+            <div class="session-card">
+                <div class="session-header">
+                    <h3>Group Session</h3>
+                    <span class="session-status status-upcoming">Upcoming</span>
+                </div>
+                <div class="session-info">
+                    <div class="session-info-item">
+                        <strong>Course:</strong> CSC Data Structures
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Date:</strong> November 18, 2025
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Time:</strong> 3:00 PM - 5:00 PM
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Location:</strong> Library Room 204
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Enrolled:</strong> 6 / 10 students
+                    </div>
+                </div>
+                <div class="session-actions">
+                    <button class="btn btn-primary">Manage Session</button>
+                    <button class="btn btn-secondary">View Enrollments</button>
+                </div>
+            </div>
+
+            <div class="session-card">
+                <div class="session-header">
+                    <h3>Calculus I - Integration Review</h3>
+                    <span class="session-status status-active">Active</span>
+                </div>
+                <div class="session-info">
+                    <div class="session-info-item">
+                        <strong>Course:</strong> MATH 226
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Date:</strong> November 15, 2025
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Time:</strong> 2:00 PM - 4:00 PM
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Location:</strong> Science Building 301
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Enrolled:</strong> 10 / 10 students
+                    </div>
+                </div>
+                <div class="session-actions">
+                    <button class="btn btn-primary">Manage Session</button>
+                    <button class="btn btn-secondary">View Enrollments</button>
+                </div>
+            </div>
+
+            <div class="session-card">
+                <div class="session-header">
+                    <h3>Algorithms - Graph Theory</h3>
+                    <span class="session-status status-upcoming">Upcoming</span>
+                </div>
+                <div class="session-info">
+                    <div class="session-info-item">
+                        <strong>Course:</strong> CSC 645
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Date:</strong> November 20, 2025
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Time:</strong> 1:00 PM - 3:00 PM
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Location:</strong> Tech Lab 105
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Enrolled:</strong> 4 / 8 students
+                    </div>
+                </div>
+                <div class="session-actions">
+                    <button class="btn btn-primary">Manage Session</button>
+                    <button class="btn btn-secondary">View Enrollments</button>
+                </div>
+            </div>
+
+            <div class="session-card">
+                <div class="session-header">
+                    <h3>Linear Algebra - Eigenvalues</h3>
+                    <span class="session-status status-completed">Completed</span>
+                </div>
+                <div class="session-info">
+                    <div class="session-info-item">
+                        <strong>Course:</strong> MATH 245
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Date:</strong> November 10, 2025
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Time:</strong> 10:00 AM - 12:00 PM
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Location:</strong> Math Building 201
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Enrolled:</strong> 7 / 8 students
+                    </div>
+                </div>
+                <div class="session-actions">
+                    <button class="btn btn-primary">View Summary</button>
+                    <button class="btn btn-secondary">View Feedback</button>
+                </div>
+            </div>
+
+            <div class="session-card">
+                <div class="session-header">
+                    <h3>Discrete Math - Logic Proofs</h3>
+                    <span class="session-status status-upcoming">Upcoming</span>
+                </div>
+                <div class="session-info">
+                    <div class="session-info-item">
+                        <strong>Course:</strong> MATH 325
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Date:</strong> November 22, 2025
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Time:</strong> 4:00 PM - 6:00 PM
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Location:</strong> Library Room 150
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Enrolled:</strong> 5 / 12 students
+                    </div>
+                </div>
+                <div class="session-actions">
+                    <button class="btn btn-primary">Manage Session</button>
+                    <button class="btn btn-secondary">View Enrollments</button>
+                </div>
+            </div>
+
+            <div class="session-card">
+                <div class="session-header">
+                    <h3>Data Structures - Trees & Graphs</h3>
+                    <span class="session-status status-completed">Completed</span>
+                </div>
+                <div class="session-info">
+                    <div class="session-info-item">
+                        <strong>Course:</strong> CSC 415
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Date:</strong> November 8, 2025
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Time:</strong> 5:00 PM - 7:00 PM
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Location:</strong> Computer Lab 220
+                    </div>
+                    <div class="session-info-item">
+                        <strong>Enrolled:</strong> 9 / 10 students
+                    </div>
+                </div>
+                <div class="session-actions">
+                    <button class="btn btn-primary">View Summary</button>
+                    <button class="btn btn-secondary">View Feedback</button>
+                </div>
+            </div>
+        </div>
+        </div><!-- end dashboardContent -->
+        
+    </main>
+
+    <script>
+
+        // Course Actions
+        document.querySelectorAll('.course-card .btn-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                console.log('View Students clicked');
+            });
+        });
+
+        document.querySelectorAll('.course-card .btn-secondary').forEach(button => {
+            button.addEventListener('click', function() {
+                console.log('Edit Details clicked');
+            });
+        });
+
+        // Session Actions
+        document.querySelectorAll('.session-card .btn-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                const sessionStatus = this.closest('.session-card').querySelector('.session-status').textContent;
+                if (sessionStatus === 'Completed') {
+                    console.log('View Summary clicked');
+                } else {
+                    console.log('Manage Session clicked');
+                }
+            });
+        });
+
+        document.querySelectorAll('.session-card .btn-secondary').forEach(button => {
+            button.addEventListener('click', function() {
+                const sessionStatus = this.closest('.session-card').querySelector('.session-status').textContent;
+                if (sessionStatus === 'Completed') {
+                    console.log('View Feedback clicked');
+                } else {
+                    console.log('View Enrollments clicked');
+                }
+            });
+        });
+
+        // View All Links
+        document.querySelectorAll('.view-all-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('View All clicked:', this.textContent);
+            });
+        });
+
+    </script>
+
+    <script>
+        // Navbar Toggle JavaScript
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const aboutLink = document.getElementById('aboutLink');
+        const aboutDropdown = document.getElementById('aboutDropdown');
+
+        // Main menu toggle
+        menuToggle.addEventListener('click', () => {
+            // Toggle 'active' class on both the menu and the button
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+
+            // Ensure the dropdown closes when the main menu is toggled
+            aboutDropdown.classList.remove('dropdown-active');
+        });
+
+        // Dropdown toggle for "About" link (on mobile)
+        aboutLink.addEventListener('click', (e) => {
+            // Check if we are on a mobile view (using a simple screen width check or similar logic)
+            if (window.innerWidth <= 720) {
+                e.preventDefault(); // Prevent the link from navigating immediately
+                aboutDropdown.classList.toggle('dropdown-active');
+            }
+        });
+    </script>
+
+    <!-- Redirect students to student dashboard -->
+    <script>
+        async function checkUserRoleAndRedirect() {
+            try {
+                const response = await fetch('/api/auth/me', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (data.success && data.user && data.user.role === 'Student') {
+                    // Student should not be on tutor dashboard - redirect them
+                    window.location.href = 'studentDashboard.html';
+                    return;
+                }
+            } catch (error) {
+                console.error('Error checking user role:', error);
+            }
+        }
+
+        checkUserRoleAndRedirect();
+    </script>
+
+    <!-- Auth utility for managing login state and nav bar -->
+    <script src="js/auth.js"></script>
+    <!-- Tutor dashboard data loader -->
+    <script src="js/tutorDashboard.js"></script>
+
+
+    <!-- "ADD COURSE" (formerly "Manage Courses" button Modal -->
+    <div id="manageCourseModal" class="modal" style="display: none;">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add New Course</h2>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="courseForm">
+            <div class="form-group">
+                <label for="courseName">Course Name</label>
+                <input type="text" id="courseName" required>
+            </div>
+            <div class="form-group">
+                <label for="courseCode">Course Code</label>
+                <input type="text" id="courseCode" placeholder="e.g., CSC 415" required>
+            </div>
+            <div class="form-group">
+                <label for="courseDescription">Description</label>
+                <textarea id="courseDescription" rows="4"></textarea>
+            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveCourse()">Save Course</button>
+        </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <button class="close-btn" onclick="closeProfileModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="editFirstName">First Name</label>
+                        <input type="text" id="editFirstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName">Last Name</label>
+                        <input type="text" id="editLastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editYearsExperience">Years of Experience</label>
+                        <input type="number" id="editYearsExperience" min="0" max="50" placeholder="e.g., 3">
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescription">Short Description (shown in Search Results)</label>
+                        <input type="text" id="editDescription" placeholder="e.g., Mathematics & Computer Science Tutor" maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBio">About Me (shown on your profile)</label>
+                        <textarea id="editBio" rows="6" placeholder="Tell students about your teaching experience, expertise, and approach..." maxlength="1000"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeProfileModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Session Modal -->
+    <div id="createSessionModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Session</h2>
+                <button class="close-btn" onclick="closeSessionModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="sessionForm">
+                    <div class="form-group">
+                        <label for="sessionTitle">Session Title</label>
+                        <input type="text" id="sessionTitle" placeholder="e.g., Midterm Review, Chapter 5 Help Session" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionType">Session Type</label>
+                        <select id="sessionType" onchange="handleSessionTypeChange()" required>
+                            <option value="one_on_one">One-on-One</option>
+                            <option value="open">Open (Group)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Courses (select one or more)</label>
+                        <div id="sessionCourses" style="max-height: 200px; overflow-y: auto; border: 2px solid #e5e7eb; border-radius: 6px; padding: 0.75rem; background: white;">
+                        </div>
+                        <small style="color: #666; font-size: 0.85rem; margin-top: 0.25rem; display: block;">Check all courses this session will cover</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionDate">Date</label>
+                        <input type="date" id="sessionDate" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="sessionStartTime">Start Time</label>
+                            <input type="time" id="sessionStartTime" required>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="sessionEndTime">End Time</label>
+                            <input type="time" id="sessionEndTime" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionCapacity">Capacity (max students)</label>
+                        <input type="number" id="sessionCapacity" min="1" max="50" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionLocation">Location</label>
+                        <input type="text" id="sessionLocation" placeholder="e.g., Library Room 204 or Zoom link" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeSessionModal()">Cancel</button>
+                <button class="btn btn-primary" id="createSessionBtn" onclick="createSession()">Create Session</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Enrollments Modal -->
+    <div id="enrollmentsModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2 id="enrollmentsModalTitle">Session Enrollments</h2>
+                <button class="close-btn" onclick="closeEnrollmentsModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="enrollmentsModalBody">
+                <div class="loading-state">Loading enrollments...</div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeEnrollmentsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deny Request Reason Modal -->
+    <div id="denyReasonModal" class="confirm-modal" style="display: none;">
+        <div class="confirm-modal-content" style="max-width: 450px; text-align: left;">
+            <h3 style="margin-bottom: 1rem; color: #333; text-align: center;">Deny Request</h3>
+            <p style="color: #666; margin-bottom: 1rem; text-align: center;">Optionally provide a reason for the student.</p>
+            <textarea id="denyReasonText" placeholder="Enter a reason (optional)..." style="width: 100%; min-height: 100px; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 6px; font-size: 1rem; font-family: Arial, sans-serif; resize: vertical; margin-bottom: 1rem;"></textarea>
+            <div class="confirm-modal-actions">
+                <button class="btn btn-secondary" onclick="closeDenyReasonModal()">Cancel</button>
+                <button class="btn btn-primary" id="denyReasonConfirm" style="background: #ef4444;">Deny Request</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Additional styles for session modal */
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: white;
+        }
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        @media (max-width: 480px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+        /* Enrollment modal styles */
+        .enrollment-section {
+            margin-bottom: 1.5rem;
+        }
+        .enrollment-section h3 {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .enrollment-count {
+            background: #e8eefc;
+            color: #2f4ba5;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .enrollment-list {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .enrollment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            background: white;
+        }
+        .enrollment-item:last-child {
+            border-bottom: none;
+        }
+        .enrollment-item:hover {
+            background: #f9fafb;
+        }
+        .enrollment-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .enrollment-name {
+            font-weight: 600;
+            color: #333;
+        }
+        .enrollment-email {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .enrollment-date {
+            font-size: 0.8rem;
+            color: #999;
+        }
+        .enrollment-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .enrollment-btn {
+            padding: 0.4rem 0.75rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .enrollment-btn.remove {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .enrollment-btn.remove:hover {
+            background: #fecaca;
+        }
+        .enrollment-btn.accept {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .enrollment-btn.accept:hover {
+            background: #a7f3d0;
+        }
+        .enrollment-btn.deny {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .enrollment-btn.deny:hover {
+            background: #fecaca;
+        }
+        .empty-enrollment {
+            padding: 1.5rem;
+            text-align: center;
+            color: #999;
+            font-style: italic;
+        }
+        .capacity-info {
+            background: #f3f4f6;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .capacity-info strong {
+            color: #333;
+        }
+        .capacity-bar {
+            width: 100px;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .capacity-fill {
+            height: 100%;
+            background: #2f4ba5;
+            transition: width 0.3s;
+        }
+        .capacity-fill.full {
+            background: #ef4444;
+        }
+    </style>
+
+</body>
+</html>

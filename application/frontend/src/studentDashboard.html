@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-42SQV5RQNV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-42SQV5RQNV');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile - EduGator</title>
+    <script>
+        // Check localStorage and set data-auth attribute immediately
+        (function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            document.documentElement.setAttribute('data-auth', isLoggedIn ? 'in' : 'out');
+        })();
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        nav {
+            background-color: #333;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            gap: 2rem;
+            height: 70px;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex: 1;
+            min-height: 38px;
+        }
+        .logo img {
+            height: 30px;
+            width: auto;
+            display: block;
+        }
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .nav-auth-in {
+            display: none !important;
+        }
+        html[data-auth="in"] .nav-auth-in {
+            display: flex !important;
+        }
+        html[data-auth="in"] .nav-auth-out {
+            display: none !important;
+        }
+        html[data-auth="out"] .nav-auth-in {
+            display: none !important;
+        }
+        .inbox-icon img {
+            height: 24px;
+            width: 24px;
+            display: block;
+            filter: brightness(0) invert(1);
+        }
+        .nav-link:hover {
+            background-color: #555;
+        }
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #444;
+            min-width: 200px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+        }
+        .nav-item:hover .dropdown, .dropdown-active {
+            display: block;
+        }
+        .dropdown-item {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #555;
+            transition: background-color 0.3s;
+        }
+        .dropdown-item:hover {
+            background-color: #555;
+        }
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 0;
+            width: 30px;
+            height: 25px;
+            position: relative;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            margin: 5px 0;
+            background-color: white;
+            transition: all 0.4s ease-in-out;
+            border-radius: 2px;
+        }
+        .menu-toggle.active .bar1 {
+            transform: translate(0, 8px) rotate(-45deg);
+        }
+        .menu-toggle.active .bar2 {
+            opacity: 0;
+        }
+        .menu-toggle.active .bar3 {
+            transform: translate(0, -8px) rotate(45deg);
+        }
+        @media (max-width: 720px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 68px;
+                left: 0;
+                background-color: #333;
+                box-shadow: 0 4px 6px rgba(0,0,0,.1);
+                padding: 1rem 0;
+                gap: 0;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-item {
+                width: 100%;
+            }
+            .nav-link {
+                display: block;
+                padding: 0.75rem 2rem;
+                text-align: left;
+            }
+            .dropdown {
+                position: static;
+                width: 100%;
+                background-color: #444;
+                box-shadow: none;
+                border-radius: 0;
+                display: none !important;
+            }
+            .dropdown-active.dropdown {
+                display: block !important;
+            }
+            .dropdown-item {
+                padding: 0.75rem 3rem;
+            }
+        }
+        .page {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .breadcrumbs a {
+            color: #333;
+            text-decoration: none;
+            background: #eaeaea;
+            padding: 0.4rem 0.7rem;
+            border-radius: 0.5rem;
+            transition: background 0.2s;
+        }
+        .breadcrumbs a:hover {
+            background: #d9d9d9;
+        }
+        .profile-header {
+            background: #fff;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+        .tutor-apply-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: #2f4ba5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(47, 75, 165, 0.3);
+        }
+        .tutor-apply-btn:hover {
+            background-color: #243a85;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(47, 75, 165, 0.4);
+        }
+        .tutor-apply-btn.pending {
+            background-color: #f59e0b;
+            cursor: default;
+            box-shadow: none;
+        }
+        .tutor-apply-btn.pending:hover {
+            background-color: #f59e0b;
+            transform: none;
+            box-shadow: none;
+        }
+        .profile-image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .edit-profile-btn {
+            padding: 0.5rem 1rem;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        .edit-profile-btn:hover {
+            background-color: #555;
+        }
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .profile-info h1 {
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+        .profile-subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #333;
+            font-size: 0.9rem;
+        }
+        .info-value {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        .bio-section {
+            margin-top: 1rem;
+        }
+        .bio-label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .bio-text {
+            color: #666;
+            line-height: 1.6;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .section-header h2 {
+            color: #333;
+        }
+        .section-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .view-all-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            background: #eaeaea;
+            border-radius: 6px;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .view-all-link:hover {
+            background: #d9d9d9;
+        }
+        .add-courses-btn {
+            color: white;
+            background-color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: background 0.2s;
+            white-space: nowrap;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .add-courses-btn:hover {
+            background-color: #555;
+        }
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            max-width: 900px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        .courses-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+        .course-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .course-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+        .course-card h3 {
+            color: #333;
+            margin-bottom: 0.25rem;
+            flex: 1;
+        }
+        .course-code {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+        .course-meta {
+            color: #666;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .course-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .btn {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background-color: #333;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #555;
+        }
+        .btn-secondary {
+            background-color: #eaeaea;
+            color: #333;
+        }
+        .btn-secondary:hover {
+            background-color: #d9d9d9;
+        }
+        .empty-state {
+            background: #fff;
+            border-radius: 10px;
+            padding: 3rem 2rem;
+            text-align: center;
+            color: #666;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+        }
+        .empty-state h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 3rem;
+            font-size: 1.1rem;
+        }
+        .error-state {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .error-state p {
+            color: #ef4444;
+        }
+        @media (max-width: 768px) {
+            .top-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .tutor-apply-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .profile-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .profile-image-container {
+                margin: 0 auto;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .section-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+            .add-courses-btn,
+            .view-all-link {
+                width: 100%;
+                text-align: center;
+            }
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            .course-actions {
+                flex-direction: column;
+            }
+        }
+        .message-container {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
+            z-index: 2000;
+        }
+
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .success-message {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .confirm-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirm-modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .confirm-modal-content h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .confirm-modal-content p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .confirm-modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .demo-banner {
+            background-color: #06402B; /* Dark Green */
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-banner">
+        SFSU Software Engineering Project CSC 648-848, Fall 2025. For Demonstration Only
+    </div>
+    <div class="message-container">
+        <div id="error-message" class="error-message"></div>
+        <div id="success-message" class="success-message"></div>
+    </div>
+    
+    <div id="confirmModal" class="confirm-modal" style="display: none;">
+        <div class="confirm-modal-content">
+            <h3 id="confirmTitle">Confirm Action</h3>
+            <p id="confirmMessage">Are you sure?</p>
+            <div class="confirm-modal-actions">
+                <button class="btn btn-secondary" id="confirmCancel">Cancel</button>
+                <button class="btn btn-primary" id="confirmOk">Confirm</button>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="logo">
+                    <img src="public/nav_logo.png" alt="EduGator Logo">
+                </a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="aboutLink">About</a>
+                    <div class="dropdown" id="aboutDropdown">
+                        <a href="about/about-grady.html" class="dropdown-item">Grady Walworth - Team Lead</a>
+                        <a href="about/about-michael.html" class="dropdown-item">Michael Thompson - Github Lead</a>
+                        <a href="about/about-tejas.html" class="dropdown-item">Tejas Rajan - Frontend Lead</a>
+                        <a href="about/about-kameron.html" class="dropdown-item">Kameron Jacob - Frontend Developer</a>
+                        <a href="about/about-chris.html" class="dropdown-item">Chris Chan - Backend Lead</a>
+                        <a href="about/about-hardy.html" class="dropdown-item">Hardy Chang - Backend Developer</a>
+                    </div>
+                </li>
+                <li class="nav-item nav-auth-in"><a href="calendar.html" class="nav-link">Calendar</a></li>
+                <li class="nav-item nav-auth-in" id="inbox-placeholder">
+                    <a href="inbox.html" class="nav-link inbox-icon">
+                      <img src="public/inbox-icon.png" alt="Messages">
+                    </a>
+                  </li>
+                <li class="nav-item nav-auth-in" id="profile-placeholder"><a href="studentDashboard.html" class="nav-link">Profile</a></li>
+                <li class="nav-item nav-auth-out"><a href="auth/login.html" class="nav-link">Login</a></li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+                <span class="bar1"></span>
+                <span class="bar2"></span>
+                <span class="bar3"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="page">
+        <!-- Loading state - visible by default -->
+        <div id="loading" class="loading">Loading dashboard...</div>
+
+        <!-- Error state - hidden by default -->
+        <div id="errorState" class="error-state" style="display:none;">
+            <p></p>
+        </div>
+
+        <!-- Dashboard content - hidden by default -->
+        <div id="dashboardContent" style="display:none;">
+        <div class="top-header">
+            <div class="breadcrumbs">
+                <a href="index.html">← Back to Home</a>
+            </div>
+            <a href="tutorRegistration.html" class="tutor-apply-btn" id="tutorApplyBtn">Apply To Become a Tutor!</a>
+        </div>
+
+        <div class="profile-header">
+            <div class="profile-image-container">
+                <img src="public/edugator_logo_egg.png" alt="Student Profile" class="profile-image">
+                <button class="edit-profile-btn" onclick="openEditProfileModal()">Edit Profile</button>
+            </div>
+            <div class="profile-info">
+                <div>
+                    <h1>Alex Johnson</h1>
+                    <p class="profile-subtitle">Computer Science Major • Junior</p>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">ajohnson@sfsu.edu</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Expected Graduation</span>
+                        <span class="info-value">May 2026</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">GPA</span>
+                        <span class="info-value">3.72</span>
+                    </div>
+                </div>
+
+                <div class="bio-section">
+                    <div class="bio-label">About Me</div>
+                    <p class="bio-text">
+                        Computer Science student passionate about software engineering and web development.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Courses Enrolled</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">18</div>
+                <div class="stat-label">Total Credits</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Tutoring Sessions</div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>My Courses</h2>
+            <div class="section-actions">
+                <button class="add-courses-btn" onclick="openManageCourseModal()">Add Courses</button>
+                <a href="javascript:void(0)" class="view-all-link" onclick="toggleViewAllCourses()">View All Courses</a>
+            </div>
+        </div>
+
+        <div class="courses-grid">
+            <div class="course-card">
+                <div class="course-header">
+                    <div>
+                        <h3>Software Engineering</h3>
+                        <span class="course-code">CSC 648</span>
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div><strong>Instructor:</strong> Prof. Sarah Mitchell</div>
+                    <div><strong>Schedule:</strong> Mon/Wed 2:00-3:15 PM</div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-primary">View Course</button>
+                    <button class="btn btn-secondary">Find Tutor</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div>
+                        <h3>Database Systems</h3>
+                        <span class="course-code">CSC 675</span>
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div><strong>Instructor:</strong> Dr. James Rodriguez</div>
+                    <div><strong>Schedule:</strong> Tue/Thu 10:00-11:15 AM</div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-primary">View Course</button>
+                    <button class="btn btn-secondary">Find Tutor</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div>
+                        <h3>Web Development</h3>
+                        <span class="course-code">CSC 667</span>
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div><strong>Instructor:</strong> Prof. Lisa Chen</div>
+                    <div><strong>Schedule:</strong> Mon/Wed 4:00-5:15 PM</div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-primary">View Course</button>
+                    <button class="btn btn-secondary">Find Tutor</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div>
+                        <h3>Data Structures</h3>
+                        <span class="course-code">CSC 415</span>
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div><strong>Instructor:</strong> Dr. Michael Brown</div>
+                    <div><strong>Schedule:</strong> Tue/Thu 1:00-2:15 PM</div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-primary">View Course</button>
+                    <button class="btn btn-secondary">Find Tutor</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div>
+                        <h3>Computer Networks</h3>
+                        <span class="course-code">CSC 645</span>
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div><strong>Instructor:</strong> Prof. David Kim</div>
+                    <div><strong>Schedule:</strong> Mon/Wed 11:00-12:15 PM</div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-primary">View Course</button>
+                    <button class="btn btn-secondary">Find Tutor</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div>
+                        <h3>Operating Systems</h3>
+                        <span class="course-code">CSC 453</span>
+                    </div>
+                </div>
+                <div class="course-meta">
+                    <div><strong>Instructor:</strong> Dr. Emily Taylor</div>
+                    <div><strong>Schedule:</strong> Tue/Thu 3:30-4:45 PM</div>
+                </div>
+                <div class="course-actions">
+                    <button class="btn btn-primary">View Course</button>
+                    <button class="btn btn-secondary">Find Tutor</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enrolled Sessions Section -->
+        <div class="section-header" style="margin-top: 2rem;">
+            <h2>Enrolled Sessions</h2>
+        </div>
+
+        <div id="enrolledSessionsGrid" class="courses-grid">
+            <div class="empty-state">
+                <h3>No Enrolled Sessions</h3>
+                <p>You are not currently enrolled in any tutoring sessions.</p>
+            </div>
+        </div>
+        </div><!-- end dashboardContent -->
+    </main>
+
+    <style>
+        /* Course status badges */
+        .course-status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+        .status-current {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        .status-planned {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .status-completed {
+            background-color: #f3f4f6;
+            color: #4b5563;
+        }
+        .view-all-link {
+            cursor: pointer;
+        }
+        /* Session card styles */
+        .session-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .session-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .session-card h3 {
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+        .session-tutor {
+            color: #2f4ba5;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .session-meta {
+            color: #666;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .session-courses {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+        }
+        .session-course-pill {
+            display: inline-block;
+            background: #e8eefc;
+            color: #2f4ba5;
+            padding: 0.25rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+        .session-status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+        .session-status-scheduled {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .session-status-active {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        .session-status-over {
+            background-color: #f3f4f6;
+            color: #4b5563;
+        }
+    </style>
+
+    <script>
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                console.log('View Course clicked');
+                // add navigation logic here
+            });
+        });
+
+        document.querySelectorAll('.btn-secondary').forEach(button => {
+            button.addEventListener('click', function() {
+                console.log('Find Tutor clicked');
+                // add search logic here
+            });
+        });
+        
+        document.querySelector('.add-courses-btn').addEventListener('click', function() {
+            console.log('Add Courses clicked');
+            // add course addition logic here
+        });
+    </script>
+
+    <script>
+        // Navbar Toggle JavaScript
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const aboutLink = document.getElementById('aboutLink');
+        const aboutDropdown = document.getElementById('aboutDropdown');
+
+        // Main menu toggle
+        menuToggle.addEventListener('click', () => {
+        // Toggle 'active' class on both the menu and the button
+        navMenu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+
+        // Ensure the dropdown closes when the main menu is toggled
+        aboutDropdown.classList.remove('dropdown-active');
+        });
+
+        // Dropdown toggle for "About" link (on mobile)
+        aboutLink.addEventListener('click', (e) => {
+        // Check if we are on a mobile view (using a simple screen width check or similar logic)
+        if (window.innerWidth <= 720) {
+            e.preventDefault(); // Prevent the link from navigating immediately
+            aboutDropdown.classList.toggle('dropdown-active');
+        }
+        });
+    </script>
+
+    <!-- Redirect tutors to tutor dashboard and check application status -->
+    <script>
+        // Redirect tutors to their proper dashboard
+        async function checkUserRoleAndRedirect() {
+            try {
+                const response = await fetch('/api/auth/me', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (data.success && data.user && data.user.role === 'Tutor') {
+                    // Tutor should not be on student dashboard - redirect them
+                    window.location.href = 'tutorDashboard.html';
+                    return;
+                }
+            } catch (error) {
+                console.error('Error checking user role:', error);
+            }
+        }
+
+        async function checkTutorApplicationStatus() {
+            const tutorApplyBtn = document.getElementById('tutorApplyBtn');
+            if (!tutorApplyBtn) return;
+
+            try {
+                const response = await fetch('/api/tutor/application-status', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (data.success && data.hasApplication && data.status === 'pending') {
+                    tutorApplyBtn.textContent = 'Tutor Application Pending...';
+                    tutorApplyBtn.classList.add('pending');
+                    tutorApplyBtn.removeAttribute('href');
+                    tutorApplyBtn.style.pointerEvents = 'none';
+                }
+                // If rejected, keep the default "Apply" button so they can reapply
+            } catch (error) {
+                console.error('Error checking tutor application status:', error);
+            }
+        }
+
+        // Check role first, then application status
+        checkUserRoleAndRedirect();
+        checkTutorApplicationStatus();
+    </script>
+
+    <!-- Auth utility for managing login state and nav bar -->
+    <script src="js/auth.js"></script>
+    <!-- Student dashboard data loader -->
+    <script src="js/studentDashboard.js"></script>
+
+    <!-- Add Course Modal -->
+    <div id="manageCourseModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Course</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="courseForm">
+                    <div class="form-group">
+                        <label for="courseName">Course Name</label>
+                        <input type="text" id="courseName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseCode">Course Code</label>
+                        <input type="text" id="courseCode" placeholder="e.g., CSC 648" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseCredits">Credits</label>
+                        <input type="number" id="courseCredits" placeholder="e.g., 3" min="1" max="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="instructorName">Instructor Name (Optional)</label>
+                        <input type="text" id="instructorName">
+                    </div>
+                    <div class="form-group">
+                        <label for="courseSchedule">Schedule (Optional)</label>
+                        <small style="color: #666; margin-bottom: 0.5rem; display: block;">
+                            Select days and times below, or enter manually. Courses with schedules will appear on your calendar!
+                        </small>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
+                            <label style="display: flex; align-items: center; gap: 0.25rem;">
+                                <input type="checkbox" name="courseDays" value="M"> M
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.25rem;">
+                                <input type="checkbox" name="courseDays" value="T"> T
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.25rem;">
+                                <input type="checkbox" name="courseDays" value="W"> W
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.25rem;">
+                                <input type="checkbox" name="courseDays" value="R"> R
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.25rem;">
+                                <input type="checkbox" name="courseDays" value="F"> F
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.25rem;">
+                                <input type="checkbox" name="courseDays" value="S"> S
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.25rem;">
+                                <input type="checkbox" name="courseDays" value="U"> U
+                            </label>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.5rem; align-items: center;">
+                            <input type="time" id="courseStartTime" placeholder="Start">
+                            <span>to</span>
+                            <input type="time" id="courseEndTime" placeholder="End">
+                        </div>
+                        <small style="color: #666; margin-top: 0.25rem; display: block;">Or enter manually:</small>
+                        <input type="text" id="courseSchedule" placeholder="e.g., MWF 10:00-11:00 or TR 14:00-15:30" style="margin-top: 0.5rem;">
+                    </div>
+                    <div class="form-group">
+                        <label for="termLabel">Term (Optional)</label>
+                        <input type="text" id="termLabel" placeholder="e.g., Fall 2024">
+                    </div>
+                    <div class="form-group">
+                        <label for="courseStatus">Status</label>
+                        <select id="courseStatus">
+                            <option value="current">Current</option>
+                            <option value="planned">Planned</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveCourse()">Save Course</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <button class="close-btn" onclick="closeProfileModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="editFirstName">First Name</label>
+                        <input type="text" id="editFirstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName">Last Name</label>
+                        <input type="text" id="editLastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editMajor">Major</label>
+                        <input type="text" id="editMajor" placeholder="e.g., Computer Science">
+                    </div>
+                    <div class="form-group">
+                        <label for="editGpa">GPA</label>
+                        <input type="number" id="editGpa" placeholder="3.50" min="0" max="4" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="editGraduationDate">Expected Graduation (MM/YYYY)</label>
+                        <input type="text" id="editGraduationDate" placeholder="MM/YYYY" maxlength="7">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBio">About Me</label>
+                        <textarea id="editBio" rows="4" placeholder="Tell us about yourself..." maxlength="1000"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeProfileModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

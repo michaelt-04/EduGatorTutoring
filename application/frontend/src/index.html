@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-42SQV5RQNV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-42SQV5RQNV');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home - EduGator</title>
+  <script>
+    // Check localStorage and set data-auth attribute immediately
+    (function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      document.documentElement.setAttribute('data-auth', isLoggedIn ? 'in' : 'out');
+    })();
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+    nav { background-color: #333; }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; gap: 2rem; height: 70px; }
+    .nav-left { display: flex; align-items: center; gap: 2rem; flex: 1; min-height: 38px; }
+    .logo img { height: 30px; width: auto; display: block; }
+    .nav-menu { list-style: none; display: flex; gap: 2rem; align-items: center; }
+    .nav-item { position: relative; display: flex; align-items: center; }
+    .nav-link { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: background-color .3s; display: flex; align-items: center; }
+    /* Auth-based nav visibility */
+    .nav-auth-in {
+      display: none !important;
+    }
+    html[data-auth="in"] .nav-auth-in {
+      display: flex !important;
+    }
+    html[data-auth="in"] .nav-auth-out {
+      display: none !important;
+    }
+    html[data-auth="out"] .nav-auth-in {
+      display: none !important;
+    }
+    .inbox-icon img {
+      height: 24px;
+      width: 24px;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+    .nav-link:hover { background-color: #555; }
+    .dropdown { position: absolute; top: 100%; left: 0; background-color: #444; min-width: 200px; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,.1); display: none; z-index: 1000; }
+    /* Change hover to a class that JS can control on mobile/desktop */
+    .nav-item:hover .dropdown, .dropdown-active { display: block; } 
+    .dropdown-item { display: block; color: white; text-decoration: none; padding: .75rem 1rem; border-bottom: 1px solid #555; transition: background-color .3s; }
+    .dropdown-item:hover { background-color: #555; }
+    .dropdown-item:last-child { border-bottom: none; }
+    .main-content { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; text-align: center; }
+    .main-image { max-width: 300px; width: 100%; height: 300px; object-fit: cover; border-radius: 10px; }
+    h1 { color: #333; margin-bottom: 1rem; }
+    p { color: #666; font-size: 1.1rem; }
+    .search-container { max-width: 800px; margin: 3rem auto 1rem; text-align: center; }
+    .search-container h2 { color: #333; font-size: 2rem; margin-bottom: 1.5rem; }
+    .search-row { display: grid; grid-template-columns: 1fr auto; gap: .5rem; }
+    .search-input { flex: 1; padding: 1rem; font-size: 1.1rem; border: 2px solid #ddd; border-radius: 8px; outline: none; transition: border-color .3s; }
+    .search-input:focus { border-color: #555; }
+    .search-button { padding: 1rem 2rem; font-size: 1.1rem; background-color: #333; color: white; border: none; border-radius: 8px; cursor: pointer; transition: background-color .3s; }
+    .search-button:hover { background-color: #555; }
+    .filters { display: grid; grid-template-columns: 1fr; gap: .5rem; margin-top: .75rem; }
+    .search-select, .search-number, .search-date { padding: .9rem; font-size: 1rem; border: 2px solid #ddd; border-radius: 8px; outline: none; transition: border-color .2s; }
+    .search-select:focus, .search-number:focus, .search-date:focus { border-color: #555; }
+
+    /* Responsive Navbar Styles */
+    .menu-toggle {
+    display: none; /* Hide toggle button on desktop */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1001; /* Ensure it's above the menu when open */
+    padding: 0;
+    width: 30px; /* Define button size */
+    height: 25px;
+    position: relative; /* For absolute positioning of bars */
+    }
+
+    /* Style for the hamburger bars */
+    .menu-toggle span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    margin: 5px 0;
+    background-color: white;
+    transition: all 0.4s ease-in-out;
+    border-radius: 2px;
+    }
+
+    /* Transformation for the 'X' shape when menu is active */
+    .menu-toggle.active .bar1 {
+    transform: translate(0, 8px) rotate(-45deg);
+    }
+
+    .menu-toggle.active .bar2 {
+    opacity: 0;
+    }
+
+    .menu-toggle.active .bar3 {
+    transform: translate(0, -8px) rotate(45deg);
+    }
+    @media (max-width: 720px) { 
+        .filters { grid-template-columns: 1fr; }
+
+        .menu-toggle {
+            display: block; /* Show toggle button on mobile */
+        }
+
+        .nav-menu {
+            display: none; /* Hide menu by default on mobile */
+            flex-direction: column;
+            width: 100%;
+            position: absolute;
+            top: 68px; /* Position right below the nav bar */
+            left: 0;
+            background-color: #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,.1);
+            padding: 1rem 0;
+            gap: 0;
+        }
+
+        .nav-menu.active {
+            display: flex; /* Show menu when active class is present */
+        }
+
+        .nav-item {
+            width: 100%;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.75rem 2rem;
+            text-align: left;
+        }
+
+        .dropdown {
+            position: static; /* Change dropdown position for mobile */
+            width: 100%;
+            background-color: #444;
+            box-shadow: none;
+            border-radius: 0;
+            /* Ensure dropdown only shows with JS class on mobile */
+            display: none !important; 
+        }
+        
+        .dropdown-active.dropdown {
+             display: block !important;
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 3rem; /* Indent dropdown items */
+        }
+    }
+    .demo-banner {
+            background-color: #06402B; /* Dark Green */
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-banner">
+        SFSU Software Engineering Project CSC 648-848, Fall 2025. For Demonstration Only
+    </div>
+  <nav>
+    <div class="nav-container">
+      <div class="nav-left">
+        <a href="index.html" class="logo"><img src="public/nav_logo.png" alt="EduGator Logo"/></a>
+      </div>
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item">
+          <!-- Added ID to the about link -->
+          <a href="#" class="nav-link" id="aboutLink">About</a> 
+          <!-- Added ID to the dropdown -->
+          <div class="dropdown" id="aboutDropdown">
+            <a href="about/about-grady.html" class="dropdown-item">Grady Walworth - Team Lead</a>
+            <a href="about/about-michael.html" class="dropdown-item">Michael Thompson - Github Lead</a>
+            <a href="about/about-tejas.html" class="dropdown-item">Tejas Rajan - Frontend Lead</a>
+            <a href="about/about-kameron.html" class="dropdown-item">Kameron Jacob - Frontend Developer</a>
+            <a href="about/about-chris.html" class="dropdown-item">Chris Chan - Backend Lead</a>
+            <a href="about/about-hardy.html" class="dropdown-item">Hardy Chang - Backend Developer</a>
+          </div>
+        </li>
+        <li class="nav-item nav-auth-in"><a href="calendar.html" class="nav-link">Calendar</a></li>
+        <li class="nav-item nav-auth-in" id="inbox-placeholder">
+          <a href="inbox.html" class="nav-link inbox-icon">
+            <img src="public/inbox-icon.png" alt="Messages">
+          </a>
+        </li>
+        <li class="nav-item nav-auth-in" id="profile-placeholder"><a href="studentDashboard.html" class="nav-link">Profile</a></li>
+        <li class="nav-item nav-auth-out"><a href="auth/login.html" class="nav-link">Login</a></li>
+      </ul>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+        <span class="bar1"></span>
+        <span class="bar2"></span>
+        <span class="bar3"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <div class="search-container">
+      <h2>Find A Tutor</h2>
+      <div class="search-row">
+        <input id="searchInput" class="search-input" placeholder="Search for tutors, sessions, departments, or courses..."/>
+        <button id="searchBtn" class="search-button">Search</button>
+      </div>
+      <div class="filters">
+        <select class="search-select" id="departmentFilter">
+          <option value="">All departments</option>
+        </select>
+      </div>
+    </div>
+
+    <img src="public/edugator_logo_egg.png" class="main-image" alt="EduGator"/>
+    <h1>Welcome to Our Team</h1>
+    <p>Hover over the "About" section in the navigation to learn more about our team members.</p>
+  </div>
+
+  <script>
+    // Navbar Toggle JavaScript
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    const aboutLink = document.getElementById('aboutLink');
+    const aboutDropdown = document.getElementById('aboutDropdown');
+
+    // Main menu toggle
+    menuToggle.addEventListener('click', () => {
+    // Toggle 'active' class on both the menu and the button
+    navMenu.classList.toggle('active');
+    menuToggle.classList.toggle('active');
+
+    // Ensure the dropdown closes when the main menu is toggled
+    aboutDropdown.classList.remove('dropdown-active'); 
+    });
+
+    // Dropdown toggle for "About" link (on mobile)
+    aboutLink.addEventListener('click', (e) => {
+    // Check if we are on a mobile view (using a simple screen width check or similar logic)
+    if (window.innerWidth <= 720) { 
+        e.preventDefault(); // Prevent the link from navigating immediately
+        aboutDropdown.classList.toggle('dropdown-active');
+    }
+    });
+  
+
+
+  const API_HOSTS = [window.location.origin];
+
+  const $input = document.getElementById('searchInput');
+  const $button = document.getElementById('searchBtn');
+  const $departmentFilter = document.getElementById('departmentFilter');
+
+  async function fetchWithFallback(pathAndQuery) {
+    let lastErr;
+    for (const host of API_HOSTS) {
+      try {
+        const url = `${host}${pathAndQuery}`;
+        const r = await fetch(url);
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return await r.json();
+      } catch (e) {
+        lastErr = e;
+        console.warn('Fetch failed on', host, e);
+      }
+    }
+    throw lastErr || new Error('All hosts failed');
+  }
+
+  async function loadDepartments() {
+    try {
+      const departments = await fetchWithFallback('/api/departments');
+      departments.forEach(dept => {
+        const option = document.createElement('option');
+        option.value = dept.department_code;
+        option.textContent = `${dept.department_code} - ${dept.department_name}`;
+        $departmentFilter.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Failed to load departments:', error);
+    }
+  }
+
+  function goToSearchPage() {
+    const query = ($input?.value || '').trim();
+    const department = ($departmentFilter?.value || '').trim();
+
+    const params = new URLSearchParams();
+    if (query) params.set('q', query);
+    if (department) params.set('department', department);
+
+    window.location.href = 'search.html' + (params.toString() ? '?' + params.toString() : '');
+  }
+
+  $button.addEventListener('click', (e) => {
+    e.preventDefault();
+    goToSearchPage();
+  });
+
+  $input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      goToSearchPage();
+    }
+  });
+
+  // Load departments on page load
+  loadDepartments();
+</script>
+
+<!-- Auth utility for managing login state and nav bar -->
+<script src="js/auth.js"></script>
+
+</body>
+</html>

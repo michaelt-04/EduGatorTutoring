@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-42SQV5RQNV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-42SQV5RQNV');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - EduGator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        nav {
+            background-color: #333;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            gap: 2rem;
+            height: 70px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex: 1;
+            min-height: 38px;
+        }
+
+        .logo img {
+            height: 30px;
+            width: auto;
+            display: block;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link:hover {
+            background-color: #555;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #444;
+            min-width: 200px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+        }
+
+        .nav-item:hover .dropdown {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #555;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background-color: #555;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1rem;
+        }
+
+        .register-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            border-top: 4px solid #4CAF50;
+        }
+
+        .register-container h2 {
+            color: #4CAF50;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .register-subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem;
+            font-size: 0.95rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #4CAF50;
+        }
+
+        .form-group label .optional {
+            color: #999;
+            font-weight: normal;
+            font-size: 0.85rem;
+        }
+
+        .register-button {
+            width: 100%;
+            padding: 0.9rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+            color: white;
+            background-color: #4CAF50;
+            margin-top: 0.5rem;
+        }
+
+        .register-button:hover {
+            background-color: #45a049;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .login-link a {
+            color: #333;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .success-message {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .email-error {
+            color: #c62828;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .form-group input.invalid {
+            border-color: #c62828;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding: 0 1rem;
+            }
+
+            .register-container {
+                padding: 1.5rem;
+            }
+        }
+        .demo-banner {
+            background-color: #06402B; /* Dark Green */
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        /* Terms and Conditions Modal */
+        .terms-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .terms-modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .terms-modal-header {
+            padding: 1.5rem;
+            border-bottom: 2px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .terms-modal-header h2 {
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        .terms-close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .terms-close-btn:hover {
+            color: #333;
+        }
+
+        .terms-modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .terms-modal-body h3 {
+            color: #333;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .terms-modal-body h3:first-child {
+            margin-top: 0;
+        }
+
+        .terms-modal-body p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .terms-modal-footer {
+            padding: 1.5rem;
+            border-top: 2px solid #e5e7eb;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            flex-shrink: 0;
+        }
+
+        .btn-terms-accept {
+            padding: 0.75rem 1.5rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn-terms-accept:hover {
+            background-color: #45a049;
+        }
+
+        .btn-terms-close {
+            padding: 0.75rem 1.5rem;
+            background-color: #e5e7eb;
+            color: #333;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn-terms-close:hover {
+            background-color: #d1d5db;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-banner">
+        SFSU Software Engineering Project CSC 648-848, Fall 2025. For Demonstration Only
+    </div>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="../index.html" class="logo">
+                    <img src="../public/nav_logo.png" alt="EduGator Logo">
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">About</a>
+                    <div class="dropdown">
+                        <a href="../about/about-grady.html" class="dropdown-item">Grady Walworth - Team Lead</a>
+                        <a href="../about/about-michael.html" class="dropdown-item">Michael Thompson - Github Lead</a>
+                        <a href="../about/about-tejas.html" class="dropdown-item">Tejas Rajan - Frontend Lead</a>
+                        <a href="../about/about-kameron.html" class="dropdown-item">Kameron Jacob - Frontend Developer</a>
+                        <a href="../about/about-chris.html" class="dropdown-item">Chris Chan - Backend Lead</a>
+                        <a href="../about/about-hardy.html" class="dropdown-item">Hardy Chang - Backend Developer</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="login.html" class="nav-link">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <h1 class="page-title">Create Your Account</h1>
+        <p class="page-subtitle">Join EduGator and start your learning journey</p>
+
+        <div class="register-container">
+            <h2>Student Registration</h2>
+            <p class="register-subtitle">Apply to become a tutor later!</p>
+
+            <div id="error-message" class="error-message"></div>
+            <div id="success-message" class="success-message"></div>
+
+            <form id="register-form">
+                <!-- Basic Info -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" name="firstName" placeholder="First name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" name="lastName" placeholder="Last name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">SFSU Email</label>
+                    <input type="email" id="email" name="email" placeholder="yourname@sfsu.edu" required>
+                    <div id="email-error" class="email-error">Email must end with @sfsu.edu or @mail.sfsu.edu</div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Create a password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" placeholder="Confirm password" required>
+                    </div>
+                </div>
+
+                <!-- Student Profile Info -->
+                <div class="form-group">
+                    <label for="major">Major <span class="optional">(optional)</span></label>
+                    <input type="text" id="major" name="major" placeholder="e.g., Computer Science">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="academic-level">Academic Level <span class="optional">(optional)</span></label>
+                        <select id="academic-level" name="academicLevel">
+                            <option value="">Select level</option>
+                            <option value="freshman">Freshman</option>
+                            <option value="sophomore">Sophomore</option>
+                            <option value="junior">Junior</option>
+                            <option value="senior">Senior</option>
+                            <option value="graduate">Graduate</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gpa">GPA <span class="optional">(optional)</span></label>
+                        <input type="number" id="gpa" name="gpa" placeholder="3.50" min="0" max="4" step="0.01">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="graduation-date">Expected Graduation <span class="optional">(optional)</span></label>
+                    <input type="text" id="graduation-date" name="graduationDate" placeholder="MM/YYYY" maxlength="7">
+                </div>
+
+                <div class="form-group">
+                    <label for="bio">About Me <span class="optional">(optional)</span></label>
+                    <textarea id="bio" name="bio" placeholder="Tell us a bit about yourself, your interests, and academic goals..."></textarea>
+                </div>
+
+                <!-- Terms and Conditions Checkbox -->
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                        <input type="checkbox" id="terms-checkbox" required style="width: auto; margin-right: 0.5rem; cursor: pointer;">
+                        <span>By clicking here, you agree to our <a href="#" id="terms-link" style="color: #4CAF50; text-decoration: underline;">terms and conditions</a></span>
+                    </label>
+                </div>
+
+                <button type="submit" class="register-button">Create Account</button>
+
+                <div class="login-link">
+                    Already have an account? <a href="login.html">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Modal -->
+    <div id="termsModal" class="terms-modal" style="display: none;">
+        <div class="terms-modal-content">
+            <div class="terms-modal-header">
+                <h2>Terms and Conditions</h2>
+                <button class="terms-close-btn" onclick="closeTermsModal()">&times;</button>
+            </div>
+            <div class="terms-modal-body">
+                <p><strong>Last Updated:</strong> December 15, 2025</p>
+                
+                <h3>1. Acceptance of Terms</h3>
+                <p>By accessing and using EduGator, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                
+                <h3>2. Use of Service</h3>
+                <p>EduGator provides a platform connecting students with tutors for academic assistance. You agree to use this service only for lawful purposes and in accordance with SFSU policies.</p>
+
+                <h3>3. Tutoring Sessions</h3>
+                <p>Students and tutors are expected to conduct themselves professionally. EduGator is not responsible for the quality of tutoring services or academic outcomes.</p>
+                
+                <h3>4. Code of Conduct</h3>
+                <p>Users must not engage in harassment, academic dishonesty, or any behavior that violates SFSU's student code of conduct.</p>
+                
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: #666;">
+                    <strong>Note:</strong> This is a demonstration project for CSC 648-848. These terms are for illustrative purposes only.
+                </p>
+            </div>
+            <div class="terms-modal-footer">
+                <button class="btn-terms-accept" onclick="acceptTerms()">I Accept</button>
+                <button class="btn-terms-close" onclick="closeTermsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = `${window.location.origin}/api/auth`;
+        const validEmailPattern = /^[A-Za-z0-9._%+-]+@(sfsu\.edu|mail\.sfsu\.edu)$/;
+
+        // Helper function to show messages
+        function showMessage(elementId, message, isError = false) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+
+            // Hide after 5 seconds
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
+        // Helper function to validate email domain
+        function validateEmailDomain(emailInput, errorElement) {
+            const email = emailInput.value.trim();
+
+            if (email === '') {
+                errorElement.style.display = 'none';
+                emailInput.classList.remove('invalid');
+                return true;
+            }
+
+            if (validEmailPattern.test(email)) {
+                errorElement.style.display = 'none';
+                emailInput.classList.remove('invalid');
+                return true;
+            } else {
+                errorElement.style.display = 'block';
+                emailInput.classList.add('invalid');
+                return false;
+            }
+        }
+
+        // Graduation date formatting (MM/YYYY)
+        const graduationInput = document.getElementById('graduation-date');
+
+        graduationInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+
+            if (value.length >= 2) {
+                // Add slash after month
+                value = value.slice(0, 2) + '/' + value.slice(2, 6);
+            }
+
+            e.target.value = value;
+        });
+
+        graduationInput.addEventListener('keydown', (e) => {
+            // Allow backspace, delete, tab, and arrow keys
+            if ([8, 9, 37, 39, 46].includes(e.keyCode)) {
+                return;
+            }
+            // Only allow numbers
+            if (e.key && !/^\d$/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        // Email validation
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('email-error');
+
+        emailInput.addEventListener('input', () => {
+            validateEmailDomain(emailInput, emailError);
+        });
+
+        emailInput.addEventListener('blur', () => {
+            validateEmailDomain(emailInput, emailError);
+        });
+
+        // Registration form handler
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Get form values
+            const firstName = document.getElementById('first-name').value.trim();
+            const lastName = document.getElementById('last-name').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Check for empty names after trimming
+            if (!firstName || !lastName) {
+                showMessage('error-message', 'First name and last name cannot be empty or only spaces', true);
+                return;
+            }
+
+            // Check for whitespace-only password
+            if (password.replace(/\s/g, '').length === 0) {
+                showMessage('error-message', 'Password cannot be only whitespace', true);
+                return;
+            }
+
+            // Optional student profile fields
+            const major = document.getElementById('major').value.trim() || null;
+            const academicLevel = document.getElementById('academic-level').value || null;
+            const gpa = document.getElementById('gpa').value ? parseFloat(document.getElementById('gpa').value) : null;
+
+            // Parse MM/YYYY format to date
+            const graduationDateInput = document.getElementById('graduation-date').value.trim();
+            let graduationDate = null;
+            if (graduationDateInput) {
+                const parts = graduationDateInput.split('/');
+                if (parts.length === 2) {
+                    const month = parts[0];
+                    const year = parts[1];
+                    // Format as YYYY-MM-01 for the database
+                    graduationDate = `${year}-${month}-01`;
+                }
+            }
+
+            const bio = document.getElementById('bio').value.trim() || null;
+
+            // Hide previous messages
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+
+            // Validate email domain
+            if (!validateEmailDomain(emailInput, emailError)) {
+                emailInput.focus();
+                return;
+            }
+
+            // Validate required fields
+            if (!firstName || !lastName) {
+                showMessage('error-message', 'Please enter both first and last name', true);
+                return;
+            }
+
+            // Validate terms checkbox is checked
+            const termsAccepted = document.getElementById('terms-checkbox').checked;
+            if (!termsAccepted) {
+                showMessage('error-message', 'You must accept the terms and conditions to register', true);
+                return;
+            }
+
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                showMessage('error-message', 'Passwords do not match', true);
+                return;
+            }
+
+            // Validate password length
+            if (password.length < 6) {
+                showMessage('error-message', 'Password must be at least 6 characters long', true);
+                return;
+            }
+
+            // Validate graduation date format if provided
+            if (graduationDateInput) {
+                const parts = graduationDateInput.split('/');
+                if (parts.length !== 2 || parts[0].length !== 2 || parts[1].length !== 4) {
+                    showMessage('error-message', 'Graduation date must be in MM/YYYY format', true);
+                    return;
+                }
+                const month = parseInt(parts[0]);
+                const year = parseInt(parts[1]);
+                if (month < 1 || month > 12) {
+                    showMessage('error-message', 'Month must be between 01 and 12', true);
+                    return;
+                }
+                if (year < 2024 || year > 2035) {
+                    showMessage('error-message', 'Year must be between 2024 and 2035', true);
+                    return;
+                }
+            }
+
+            // Validate GPA if provided
+            if (gpa !== null && (gpa < 0 || gpa > 4)) {
+                showMessage('error-message', 'GPA must be between 0.00 and 4.00', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        firstName,
+                        lastName,
+                        email,
+                        password,
+                        roleType: 'Student',
+                        termsAccepted: true,
+                        studentProfile: {
+                            major,
+                            academicLevel,
+                            gpa,
+                            graduationDate,
+                            bio
+                        }
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showMessage('success-message', 'Registration successful! Redirecting to login...', false);
+                    // Clear form
+                    document.getElementById('register-form').reset();
+                    // Redirect to login after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    showMessage('error-message', data.message || 'Registration failed. Please try again.', true);
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showMessage('error-message', 'Network error. Please check your connection and try again.', true);
+            }
+        });
+
+        // Terms and Conditions Modal Functions
+        function openTermsModal(e) {
+            e.preventDefault();
+            document.getElementById('termsModal').style.display = 'flex';
+        }
+
+        function closeTermsModal() {
+            document.getElementById('termsModal').style.display = 'none';
+        }
+
+        function acceptTerms() {
+            document.getElementById('terms-checkbox').checked = true;
+            closeTermsModal();
+        }
+
+        // Add event listener for terms link
+        document.getElementById('terms-link').addEventListener('click', openTermsModal);
+
+        // Close modal when clicking outside of it
+        document.getElementById('termsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeTermsModal();
+            }
+        });
+    </script>
+
+    <!-- Auth utility for managing login state and nav bar -->
+    <script src="../js/auth.js"></script>
+
+    
+</body>
+</html>

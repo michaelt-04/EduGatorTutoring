@@ -1,25 +1,39 @@
-# csc648 Repository
+# EduGator Tutoring Website
 
-## Please when ready add your teams application URL or IP to the repository description. This will help with grading. Teams are expected to keep this value up to date.
+## Overview
+EduGatorTutoring is a web-based platform designed to support peer tutoring and academic help coordination. This application enables students and tutors to interact, schedule tutoring sessions, and manage academic resources in a simple, intuitive interface.
 
-## Please do the following steps before completing Milestone 0.
-1. Change the name of the repository. All that needs to change is the NN to your respective team number. Team numbers whose value is less than 10, please pad with a 0. Ex team 1 is Team01 team 11 is Team11. Please make sure to also remove the username from the repository as well. Teams with incorrectly name repository will have points deducted from their milestone 0 grades.
-      - Please follow the naming convention assigned by your instructor.
+## Key Features
+● User Registration & Authentication   
+&emsp; - Only available to SFSU students (verifies with @sfsu.edu email address.   
+● Tutor Directory & Search   
+&emsp; - Browse a list of available tutors with the ability to filter by subject area.   
+● Session Requests & Scheduling    
+&emsp; - Students can request tutoring help and schedule sessions based on tutor availability.     
+● Interactive Messaging     
+&emsp; - Real-time messaging between students and tutors.  
+● Responsive UI    
+&emsp; - Designed to be accessible on both desktop and mobile screens.   
 
-1. PLEASE REMOVE THE USERNAME FROM THE REPOSITORY NAME!!!
 
-2. Add ALL members of your team to this repository. For it to count, they must ACCEPT the invite.
+## What Users Can Do
+### Students
+&emsp;&emsp;● Create and edit personal profiles   
+&emsp;&emsp;● Search for tutors by subject area   
+&emsp;&emsp;● Request tutoring sessions   
+&emsp;&emsp;● View scheduled sessions   
+&emsp;&emsp;● Communicate with tutors   
+### Tutors
+&emsp;&emsp;● Create tutor profiles with subjects and availability   
+&emsp;&emsp;● Review and accept session requests   
+&emsp;&emsp;● Manage upcoming tutoring sessions   
 
-3. Fill out the table below
-
-
-| Student Name | School Email | GitHub Username |
-|    :---:     |     :---:     |     :---:       |
-| Michael Thompson | mthompson17@sfsu.edu |  michaelt-04 |
-| Tejas Rajan  |trajan@sfsu.edu|TejasRajan98     |
-| Grady Walworth | wwalworth@sfsu.edu | WalrusIII |
-| Christopher Chan | cchan39@sfsu.edu | itzChrisChan |
-| Pei Huan Chang |   pchang@sfsu.edu  |   hobbit200419   |
-| Kameron Jacob |   kjacob2@sfsu.edu  |    KameronJacob1   |
-
-## NO code needs to be stored in the root of your repository. You may rename the application folder if you like to your team's application name. But all source code related to your team's application should be stored inside the application folder.
+## Technology Stack
+### Frontend
+&emsp;&emsp;● HTML / CSS / JavaScript
+### Backend
+&emsp;&emsp;● Node.js / Express      
+### Database
+&emsp;&emsp;● MySQL   
+## Disclaimer   
+SFSU Software Engineering Project CSC 648-848, Fall 2025. For Demonstration Only

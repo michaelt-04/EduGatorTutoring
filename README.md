@@ -5,15 +5,15 @@ EduGatorTutoring is a web-based platform designed to support peer tutoring and a
 
 ## Key Features
 ● User Registration & Authentication   
-&emsp; - Only available to SFSU students (verifies with @sfsu.edu email address.   
+&emsp; ◦ Only available to SFSU students (verifies with @sfsu.edu email address.   
 ● Tutor Directory & Search   
-&emsp; - Browse a list of available tutors with the ability to filter by subject area.   
+&emsp; ◦ Browse a list of available tutors with the ability to filter by subject area.   
 ● Session Requests & Scheduling    
-&emsp; - Students can request tutoring help and schedule sessions based on tutor availability.     
+&emsp; ◦ Students can request tutoring help and schedule sessions based on tutor availability.     
 ● Interactive Messaging     
-&emsp; - Real-time messaging between students and tutors.  
+&emsp; ◦ Real-time messaging between students and tutors.  
 ● Responsive UI    
-&emsp; - Designed to be accessible on both desktop and mobile screens.   
+&emsp; ◦ Designed to be accessible on both desktop and mobile screens.   
 
 
 ## What Users Can Do
